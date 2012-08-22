@@ -9,7 +9,7 @@ begin
 	end;
 	procStateTransCnt:= procStateTransCnt + 1;
 	Result:= procStateTransCnt;
-// добавляет запись к массиву записей процесса
+// ╨┤╨╛╨▒╨░╨▓╨╗╤П╨╡╤В ╨╖╨░╨┐╨╕╤Б╤М ╨║ ╨╝╨░╤Б╤Б╨╕╨▓╤Г ╨╖╨░╨┐╨╕╤Б╨╡╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 	with procStateTransArr[procStateTransCnt] do begin
 		ri    :=i;
 		rj    :=j;
@@ -49,7 +49,7 @@ begin
 	end;
 	StateTransCnt:= StateTransCnt + 1;
 	Result:= StateTransCnt;
-// добавляет запись к массиву записей процесса
+// ╨┤╨╛╨▒╨░╨▓╨╗╤П╨╡╤В ╨╖╨░╨┐╨╕╤Б╤М ╨║ ╨╝╨░╤Б╤Б╨╕╨▓╤Г ╨╖╨░╨┐╨╕╤Б╨╡╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 //	writeln('AddSStateTransToArr i=', ai); 
 	with StateTransArr[StateTransCnt] do begin
 		ri    :=ai;
@@ -83,7 +83,7 @@ function AddSStateTrans(
 	ai, aj, ak: longint; apijk, arijk: double;
 	az1i, az2i, aRNSi, az1j, az2j, aRNSj, au1, aku1, av1, av2, akv1, ansgh: longint
   ): longint;
-// Todo Параметры не используются
+// Todo ╨Я╨░╤А╨░╨╝╨╡╤В╤А╤Л ╨╜╨╡ ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╤О╤В╤Б╤П
 begin
 	Result:= StateTransCnt;
 	if arijk = low(longint) then begin
@@ -91,7 +91,7 @@ begin
 	end;
 	StateTransCnt:= StateTransCnt + 1;
 	Result:= StateTransCnt;
-// добавляет XML
+// ╨┤╨╛╨▒╨░╨▓╨╗╤П╨╡╤В XML
 	addStateTransNode(
       ai, aj, ak, apijk, arijk,
       az1i, az2i, aRNSi, az1j, az2j, aRNSj,
@@ -125,10 +125,10 @@ function setAllJbyRNS(): boolean;
 var
 	aj: longint;
 begin
-// использует XML
+// ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В XML
 	stateTransNode:= stateTransRootNode.firstChild;
 	for i:=1 to StateTransCnt do begin
-		//найти ноду и изменить j
+		//╨╜╨░╨╣╤В╨╕ ╨╜╨╛╨┤╤Г ╨╕ ╨╕╨╖╨╝╨╡╨╜╨╕╤В╤М j
 		aj:= getJbyRNS( getIntAttrValue(stateTransNode, 'RNSj', -1) );
 		addIntAttribute(stateTransNode, 'j', aj);
 		stateTransNode:= stateTransNode.NextSibling;
@@ -145,21 +145,22 @@ end;
 
 function AddStateTransForBaseState(): boolean;
 begin // i= 1;
-	j:= -1000; // не определено
-	k:= 1; // только одно немгн
+	j:= -1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+	k:= 1; // ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╨╜╨╡╨╝╨│╨╜
 	pijk:= 1; rijk:= 0;
 
 	z1i:=-1; z2i:=-1; RNSi:=calcRNS(z1i, z2i, nC); RNS[i]:= RNSi;
-// для немгновенных управлений
+// ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣
 	z1j:= 0; z2j:= 0; RNSj:=calcRNS(z1j, z2j, nC);
 	Ku1:=1; u1:=0;
-// для мгновенных управлений
+// ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣
 	Kv1:=0;
-	v1:=-1000; // не определено
-	v2:=-1000; // не определено
-	nsgh:=-1000; // не определено
+	v1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+	v2:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+	nsgh:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 	
-	StateTransCnt:= AddSStateTrans(
+//	StateTransCnt:= AddSStateTrans(
+	StateTransCnt:= AddSStateTransToArr(
 		i, j, k, pijk, rijk,
 		z1i, z2i, RNSi, z1j, z2j, RNSj,
 		u1, Ku1, v1, v2, Kv1, nsgh
@@ -167,32 +168,32 @@ begin // i= 1;
 end;
 
 function calcStateTransOrig(): longint;
-// реализация "в лоб" по Синицыну-Бурлакову
+// ╤А╨╡╨░╨╗╨╕╨╖╨░╤Ж╨╕╤П "╨▓ ╨╗╨╛╨▒" ╨┐╨╛ ╨б╨╕╨╜╨╕╤Ж╤Л╨╜╤Г-╨С╤Г╤А╨╗╨░╨║╨╛╨▓╤Г
 begin
 //  Result:= 0;
-//  M:= ReqTypeCnt;//кол-во заявок
+//  M:= ReqTypeCnt;//╨║╨╛╨╗-╨▓╨╛ ╨╖╨░╤П╨▓╨╛╨║
 
-  i:=1; // базовое состояние
+  i:=1; // ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡
   AddStateTransForBaseState();
 ////////////////////////////////////////////////////////////////////////////////
-  for z2:= M downto 1 do begin // по заявкам - показателям
-    for z1:=0 to Nc do begin // по ресурсу - количество кусков
+  for z2:= M downto 1 do begin // ╨┐╨╛ ╨╖╨░╤П╨▓╨║╨░╨╝ - ╨┐╨╛╨║╨░╨╖╨░╤В╨╡╨╗╤П╨╝
+    for z1:=0 to Nc do begin // ╨┐╨╛ ╤А╨╡╤Б╤Г╤А╤Б╤Г - ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╨║╤Г╤Б╨║╨╛╨▓
      i:= i + 1; {i=2..Ns-1}
-  // для немгновенных управлений 2.1
+  // ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.1
       Ku1:=0;
-      u1:=-1000; // не определено
-  // для мгновенных управлений 2.2
+      u1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+  // ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.2
       pijk:= 1;
 
       z1i:=z1; z2i:=z2; RNSi:=calcRNS(z1i, z2i, nC); RNS[i]:= RNSi;
 
       if z2=M then begin
-      // переход в базовое состояние 2.2.2
+      // ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ 2.2.2
         z1j:= -1; z2j:= -1; RNSj:=calcRNS(z1j, z2j, nC);
         rijk:= 0;
         Kv1:=1; v1:=0; v2:=0;
         k:=1;
-        nsgh:=-1000; // не определено
+        nsgh:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
         StateTransCnt:= AddSStateTrans(
           i, j, k, pijk, rijk,
@@ -204,7 +205,7 @@ begin
 
         Kv1:=rlmxi[z2j]-rlmni[z2j]+1;
         k:=0;
-        // по выделению ресурса на следующую заявку
+        // ╨┐╨╛ ╨▓╤Л╨┤╨╡╨╗╨╡╨╜╨╕╤О ╤А╨╡╤Б╤Г╤А╤Б╨░ ╨╜╨░ ╤Б╨╗╨╡╨┤╤Г╤О╤Й╤Г╤О ╨╖╨░╤П╨▓╨║╤Г
         for h:= rlmni[z2j] to rlmxi[z2j] do begin
           k:=k+1;
           nsgh:= calc_ns(z2j, h);
@@ -216,7 +217,7 @@ begin
           end
           else begin // 2.2.1.2
             z1j:= nC;
-            rijk:= low(longint); // чтобы не переходить в это недопустимое сост
+            rijk:= low(longint); // ╤З╤В╨╛╨▒╤Л ╨╜╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╕╤В╤М ╨▓ ╤Н╤В╨╛ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨╛╨╡ ╤Б╨╛╤Б╤В
             v1:= z2j;
             v2:= h;
           end;
@@ -233,21 +234,21 @@ begin
   end; // z2
 
 //////////////////////////////////////////////////////////////////////////////
-  i:=Ns; // исходное состояние
+  i:=Ns; // ╨╕╤Б╤Е╨╛╨┤╨╜╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡
 //  z1:= 0;
   z2:= 0;
   z1i:= 0; z2i:= 0; RNSi:=calcRNS(z1i, z2i, nC); RNS[i]:=RNSi;
 
-  // для немгновенных управлений 2.1
+  // ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.1
   Ku1:=0;
-  u1:=-1000; // не определено
+  u1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
-  j:= -1000; // не определено
-  k:= -1000; // не определено
+  j:= -1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+  k:= -1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
-// для мгновенных управлений 2.2
+// ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.2
   pijk := 1;
-  z2j := z2 + 1; //!!! - ПРОВЕРИТЬ
+  z2j := z2 + 1; //!!! - ╨Я╨а╨Ю╨Т╨Х╨а╨Ш╨в╨м
 
   Kv1:=rlmxi[z2j]-rlmni[z2j]+1;
   k:=0;
@@ -262,7 +263,7 @@ begin
     end
     else begin // 2.2.1.2
       z1j:= nC;
-      rijk:= low(longint); // чтобы не переходить в это недопустимое сост
+      rijk:= low(longint); // ╤З╤В╨╛╨▒╤Л ╨╜╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╕╤В╤М ╨▓ ╤Н╤В╨╛ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨╛╨╡ ╤Б╨╛╤Б╤В
       v1:= z2j;
       v2:= h;
     end;
@@ -275,33 +276,33 @@ begin
   end; // of for h
 end;
 
-///////////////// Модификация /////////////////////////////////////////
+///////////////// ╨Ь╨╛╨┤╨╕╤Д╨╕╨║╨░╤Ж╨╕╤П /////////////////////////////////////////
 function procAddAllStateTransForOneState(): boolean;
 begin
-	Kv1:=procrlmxi[z2j]-procrlmni[z2j]+1; // кол-во управлений
-	setLength(procStateTransArr, length(procStateTransArr) + Kv1 + 1); // с запасом на все управления, 0й пропускаем
+	Kv1:=procrlmxi[z2j]-procrlmni[z2j]+1; // ╨║╨╛╨╗-╨▓╨╛ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣
+	setLength(procStateTransArr, length(procStateTransArr) + Kv1 + 1); // ╤Б ╨╖╨░╨┐╨░╤Б╨╛╨╝ ╨╜╨░ ╨▓╤Б╨╡ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П, 0╨╣ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝
 
-	k:=0; // номер управления
+	k:=0; // ╨╜╨╛╨╝╨╡╤А ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П
 	for h:= procrlmni[z2j] to procrlmxi[z2j] do begin
 		k:=k+1;
-		// mpi надо передать rsti в каждый процесс 
-		nsgh:= procCalc_ns(z2j, h); // необходимый ресурс
+		// mpi ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М rsti ╨▓ ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б 
+		nsgh:= procCalc_ns(z2j, h); // ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╤Л╨╣ ╤А╨╡╤Б╤Г╤А╤Б
 		if (z1i + nsgh)<=nC then begin // 2.2.1.1
 			z1j:= z1i + nsgh;
 			v1:= z2j;
 			v2:= h;
-			// mpi надо передать rudi в каждый процесс 
-			rijk:= procrudi[z2j]*h; // доход от перехода
+			// mpi ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М rudi ╨▓ ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б 
+			rijk:= procrudi[z2j]*h; // ╨┤╨╛╤Е╨╛╨┤ ╨╛╤В ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨░
     	end
 		else begin // 2.2.1.2
 			z1j:= nC;
-			rijk:= low(longint); // чтобы не переходить в это недопустимое сост
+			rijk:= low(longint); // ╤З╤В╨╛╨▒╤Л ╨╜╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╕╤В╤М ╨▓ ╤Н╤В╨╛ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨╛╨╡ ╤Б╨╛╤Б╤В
 			v1:= z2j;
 			v2:= h;
 		end;
 		RNSj:=calcRNS(z1j, z2j, nC);
-		// mpi добавлять в локальный массив фазовых переходов для процесса
-		// mpi накапливать локальный StateTransCnt для процесса
+		// mpi ╨┤╨╛╨▒╨░╨▓╨╗╤П╤В╤М ╨▓ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╤Б╤Б╨╕╨▓ ╤Д╨░╨╖╨╛╨▓╤Л╤Е ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
+		// mpi ╨╜╨░╨║╨░╨┐╨╗╨╕╨▓╨░╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ StateTransCnt ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 		procStateTransCnt:= procAddSStateTrans(
 			i, j, k, pijk, rijk,
 			z1i, z2i, RNSi, z1j, z2j, RNSj,
@@ -309,64 +310,70 @@ begin
 
 	end; // of for h
 
-	setLength(procStateTransArr, procStateTransCnt+1); // оставляем только добавленные управления. 0й пропускаем
+	setLength(procStateTransArr, procStateTransCnt+1); // ╨╛╤Б╤В╨░╨▓╨╗╤П╨╡╨╝ ╤В╨╛╨╗╤М╨║╨╛ ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П. 0╨╣ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝
 end;
 
 function AddAllStateTransForOneState(): boolean;
-// добавить все переходы для одного сотояния
+// ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М ╨▓╤Б╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л ╨┤╨╗╤П ╨╛╨┤╨╜╨╛╨│╨╛ ╤Б╨╛╤В╨╛╤П╨╜╨╕╤П
 begin
-	// mpi надо передать rlmxi, rlmni в каждый процесс
+	// mpi ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М rlmxi, rlmni ╨▓ ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б
 
-	Kv1:=rlmxi[z2j]-rlmni[z2j]+1; // кол-во управлений
-	k:=0; // номер управления
+	Kv1:=rlmxi[z2j]-rlmni[z2j]+1; // ╨║╨╛╨╗-╨▓╨╛ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣
+	setLength(StateTransArr, length(StateTransArr) + Kv1 + 1); // ╤Б ╨╖╨░╨┐╨░╤Б╨╛╨╝ ╨╜╨░ ╨▓╤Б╨╡ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П, 0╨╣ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝
+
+	k:=0; // ╨╜╨╛╨╝╨╡╤А ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П
 	for h:= rlmni[z2j] to rlmxi[z2j] do begin
 		k:=k+1;
-		// mpi надо передать rsti в каждый процесс 
-		nsgh:= calc_ns(z2j, h); // необходимый ресурс
+		// mpi ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М rsti ╨▓ ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б 
+		nsgh:= calc_ns(z2j, h); // ╨╜╨╡╨╛╨▒╤Е╨╛╨┤╨╕╨╝╤Л╨╣ ╤А╨╡╤Б╤Г╤А╤Б
 		if (z1i + nsgh)<=nC then begin // 2.2.1.1
 			z1j:= z1i + nsgh;
 			v1:= z2j;
 			v2:= h;
-			// mpi надо передать rudi в каждый процесс 
-			rijk:= rudi[z2j]*h; // доход от перехода
+			// mpi ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М rudi ╨▓ ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б 
+			rijk:= rudi[z2j]*h; // ╨┤╨╛╤Е╨╛╨┤ ╨╛╤В ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨░
     	end
 		else begin // 2.2.1.2
 			z1j:= nC;
-			rijk:= low(longint); // чтобы не переходить в это недопустимое сост
+			rijk:= low(longint); // ╤З╤В╨╛╨▒╤Л ╨╜╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╕╤В╤М ╨▓ ╤Н╤В╨╛ ╨╜╨╡╨┤╨╛╨┐╤Г╤Б╤В╨╕╨╝╨╛╨╡ ╤Б╨╛╤Б╤В
 			v1:= z2j;
 			v2:= h;
 		end;
 		RNSj:=calcRNS(z1j, z2j, nC);
-		// mpi добавлять в локальный массив фазовых переходов для процесса
-		// mpi накапливать локальный StateTransCnt для процесса
-		StateTransCnt:= AddSStateTrans(
+		// mpi ╨┤╨╛╨▒╨░╨▓╨╗╤П╤В╤М ╨▓ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╤Б╤Б╨╕╨▓ ╤Д╨░╨╖╨╛╨▓╤Л╤Е ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
+		// mpi ╨╜╨░╨║╨░╨┐╨╗╨╕╨▓╨░╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ StateTransCnt ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
+//		StateTransCnt:= AddSStateTrans(
+		StateTransCnt:= AddSStateTransToArr(
 			i, j, k, pijk, rijk,
 			z1i, z2i, RNSi, z1j, z2j, RNSj,
 			u1, Ku1, v1, v2, Kv1, nsgh);
 	end; // of for h
+
+	setLength(StateTransArr, StateTransCnt+1); // ╨╛╤Б╤В╨░╨▓╨╗╤П╨╡╨╝ ╤В╨╛╨╗╤М╨║╨╛ ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╤П. 0╨╣ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝
 end;
 
 function AddAllStateTransToBaseState(): boolean;
-// добавить все переходы В базовое состояния j = 1
+// ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М ╨▓╤Б╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л ╨Т ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П j = 1
 begin
 	z2:= M;
-    for z1:=0 to Nc do begin // по ресурсу - количество кусков
+    for z1:=0 to Nc do begin // ╨┐╨╛ ╤А╨╡╤Б╤Г╤А╤Б╤Г - ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╨║╤Г╤Б╨║╨╛╨▓
 		i:= i + 1; {i=2..Ns-1}
-// для немгновенных управлений 2.1
-	    Ku1:=0; u1:=-1000; // не определено
-// для мгновенных управлений 2.2
+// ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.1
+	    Ku1:=0; u1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+// ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.2
 		pijk:= 1;
 		z1i:=z1; z2i:=z2; RNSi:=calcRNS(z1i, z2i, nC); RNS[i]:= RNSi;
 //		if z2=M then begin
-		// переход в базовое состояние 2.2.2
+		// ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ 2.2.2
         z1j:= -1; z2j:= -1; RNSj:=calcRNS(z1j, z2j, nC);
         rijk:= 0;
         Kv1:=1; v1:=0; v2:=0;
-		// только 1
+		// ╤В╨╛╨╗╤М╨║╨╛ 1
         k:=1;
-        nsgh:=-1000; // не определено
+        nsgh:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
-        StateTransCnt:= AddSStateTrans(
+//        StateTransCnt:= AddSStateTrans(
+        StateTransCnt:= AddSStateTransToArr(
 			i, j, k, pijk, rijk,
 			z1i, z2i, RNSi, z1j, z2j, RNSj,
 			u1, Ku1, v1, v2, Kv1, nsgh);
@@ -375,18 +382,18 @@ begin
 end;
 
 function AddAllStateTransForInitialState(): boolean;
-// добавить все переходы для исходного состояния
+// ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М ╨▓╤Б╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л ╨┤╨╗╤П ╨╕╤Б╤Е╨╛╨┤╨╜╨╛╨│╨╛ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П
 begin
-	i:= Ns; // исходное состояние
+	i:= Ns; // ╨╕╤Б╤Е╨╛╨┤╨╜╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡
 	z1i:= 0; z2i:= 0; RNSi:=calcRNS(z1i, z2i, nC); RNS[i]:=RNSi;
 
-	// для немгновенных управлений 2.1
-	Ku1:=0; u1:=-1000; // не определено
+	// ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.1
+	Ku1:=0; u1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
-	j:= -1000; // не определено
-	k:= -1000; // не определено
+	j:= -1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+	k:= -1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
 
-	// для мгновенных управлений 2.2
+	// ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.2
 	pijk := 1;
 	z2j := 1;
 
@@ -395,24 +402,24 @@ end;
 
 
 function InitProcStateTrans(): boolean;
-// подготовка данных для расчета
-// разослать общие данные M кол-во заявок, Nc кол-во порций ресурса, Ns кол-во состояний
-// рассчитать кол-во заявок, которые обрабатывает каждый процесс. сохранить в массив. разослать
+// ╨┐╨╛╨┤╨│╨╛╤В╨╛╨▓╨║╨░ ╨┤╨░╨╜╨╜╤Л╤Е ╨┤╨╗╤П ╤А╨░╤Б╤З╨╡╤В╨░
+// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М ╨╛╨▒╤Й╨╕╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ M ╨║╨╛╨╗-╨▓╨╛ ╨╖╨░╤П╨▓╨╛╨║, Nc ╨║╨╛╨╗-╨▓╨╛ ╨┐╨╛╤А╤Ж╨╕╨╣ ╤А╨╡╤Б╤Г╤А╤Б╨░, Ns ╨║╨╛╨╗-╨▓╨╛ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
+// ╤А╨░╤Б╤Б╤З╨╕╤В╨░╤В╤М ╨║╨╛╨╗-╨▓╨╛ ╨╖╨░╤П╨▓╨╛╨║, ╨║╨╛╤В╨╛╤А╤Л╨╡ ╨╛╨▒╤А╨░╨▒╨░╤В╤Л╨▓╨░╨╡╤В ╨║╨░╨╢╨┤╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б. ╤Б╨╛╤Е╤А╨░╨╜╨╕╤В╤М ╨▓ ╨╝╨░╤Б╤Б╨╕╨▓. ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М
 var
 	restM, ai: longint;	
 begin
-	// общие данные	
+	// ╨╛╨▒╤Й╨╕╨╡ ╨┤╨░╨╜╨╜╤Л╨╡	
 	MPI_BCAST(@M, 1, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_BCAST(@Nc, 1, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_BCAST(@Ns, 1, MPI_INT, 0, MPI_COMM_WORLD);
 
-	// расчет кол-ва заявок для процесса
+	// ╤А╨░╤Б╤З╨╡╤В ╨║╨╛╨╗-╨▓╨░ ╨╖╨░╤П╨▓╨╛╨║ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
     if myid = 0 then begin
 		setLength(procMArr, numprocs);
 
-		procM:= (M-1) div numprocs; //M-1 потому как для Mю заявку считаем отдельно
+		procM:= (M-1) div numprocs; //M-1 ╨┐╨╛╤В╨╛╨╝╤Г ╨║╨░╨║ ╨┤╨╗╤П M╤О ╨╖╨░╤П╨▓╨║╤Г ╤Б╤З╨╕╤В╨░╨╡╨╝ ╨╛╤В╨┤╨╡╨╗╤М╨╜╨╛
 
-		if ((M-1) mod numprocs) > 0 then begin // заявки нацело НЕ делятся по процессам
+		if ((M-1) mod numprocs) > 0 then begin // ╨╖╨░╤П╨▓╨║╨╕ ╨╜╨░╤Ж╨╡╨╗╨╛ ╨Э╨Х ╨┤╨╡╨╗╤П╤В╤Б╤П ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 			inc(procM);
 		    restM:= M-1;
 			for ai:=0 to numprocs-1 do begin
@@ -426,23 +433,23 @@ begin
 //				writeln(myid, '|procMArr[', ai, '] = ', procMArr[ai]);
 			end;
 		end
-		else begin // заявки нацело делятся по процессам 
+		else begin // ╨╖╨░╤П╨▓╨║╨╕ ╨╜╨░╤Ж╨╡╨╗╨╛ ╨┤╨╡╨╗╤П╤В╤Б╤П ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝ 
 			for ai:=0 to numprocs-1 do begin
 				procMArr[ai]:=procM;
 			end;
 		end;
 	end;
 
-	// рассылка кол-ва заявок по процессам
+	// ╤А╨░╤Б╤Б╤Л╨╗╨║╨░ ╨║╨╛╨╗-╨▓╨░ ╨╖╨░╤П╨▓╨╛╨║ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	if myid = 0 then
 		for ai:=0 to numprocs-1 do
 			MPI_SEND(@procMArr[ai], 1, MPI_INT, ai, teg, MPI_COMM_WORLD);
 
-	// получение кол-ва заявок по процессам
+	// ╨┐╨╛╨╗╤Г╤З╨╡╨╜╨╕╨╡ ╨║╨╛╨╗-╨▓╨░ ╨╖╨░╤П╨▓╨╛╨║ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	MPI_RECV(@procM, 1, MPI_INT, 0, teg, MPI_COMM_WORLD, status);
 //	writeln(myid, '| procM = ', procM);
 
-	// рассылка начального номера заявки по процессам
+	// ╤А╨░╤Б╤Б╤Л╨╗╨║╨░ ╨╜╨░╤З╨░╨╗╤М╨╜╨╛╨│╨╛ ╨╜╨╛╨╝╨╡╤А╨░ ╨╖╨░╤П╨▓╨║╨╕ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	if myid = 0 then begin
 		procUpM:= M-1;
 		for ai:= 0 to numprocs-1 do begin
@@ -451,14 +458,14 @@ begin
 		end;
 	end;
 
-	// получение начального номера заявки по процессам
+	// ╨┐╨╛╨╗╤Г╤З╨╡╨╜╨╕╨╡ ╨╜╨░╤З╨░╨╗╤М╨╜╨╛╨│╨╛ ╨╜╨╛╨╝╨╡╤А╨░ ╨╖╨░╤П╨▓╨║╨╕ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	MPI_RECV(@procUpM, 1, MPI_INT, 0, teg, MPI_COMM_WORLD, status);
 
 	procDownM:= procUpM - procM + 1;
 	writeln(myid, '| procUpM = ', procUpM, ' procDownM = ', procDownM, ' procM = ', procM);
 
 
-	// инициализация данных для процесса
+	// ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╤П ╨┤╨░╨╜╨╜╤Л╤Е ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 	setLength(procrlmxi, M+1);
 	setLength(procrlmni, M+1);
 	setLength(procrsti, M+1);
@@ -466,7 +473,7 @@ begin
 //	setLength(procrxi, M+1);
 //	setLength(procrqi, M+1);
 	
-	// рассылка данных для расчета в процессе
+	// ╤А╨░╤Б╤Б╤Л╨╗╨║╨░ ╨┤╨░╨╜╨╜╤Л╤Е ╨┤╨╗╤П ╤А╨░╤Б╤З╨╡╤В╨░ ╨▓ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨╡
 	bcast_arrInt(rlmxi, procrlmxi);
 	bcast_arrInt(rlmni, procrlmni);
 	bcast_arrInt(rsti, procrsti);
@@ -496,7 +503,7 @@ var
 	acur_buf: ^tStateTransRec;
 begin
 	for ai:=1 to length(aarr)-1 do begin
-		acur_buf:=abuf+(sizeOfStateTransRec*(ai-1)); // смещение на всю запись
+		acur_buf:=abuf+(sizeOfStateTransRec*(ai-1)); // ╤Б╨╝╨╡╤Й╨╡╨╜╨╕╨╡ ╨╜╨░ ╨▓╤Б╤О ╨╖╨░╨┐╨╕╤Б╤М
         acur_buf^:= aarr[ai];
 	end;
 
@@ -507,12 +514,12 @@ var
 	ai: longint;
 	acur_buf: ^tStateTransRec;
 begin
-	// увеличить размер массива StateTransArr
+	// ╤Г╨▓╨╡╨╗╨╕╤З╨╕╤В╤М ╤А╨░╨╖╨╝╨╡╤А ╨╝╨░╤Б╤Б╨╕╨▓╨░ StateTransArr
 //	writeln('old length(StateTransArr) = ', length(StateTransArr), 'new length = ', length(StateTransArr) + aRecCnt);
 	setLength(StateTransArr, length(StateTransArr) + aRecCnt);
 
 	for ai:=1 to aRecCnt do begin
-		acur_buf:=abuf+(sizeOfStateTransRec*(ai-1)); // смещение на всю запись
+		acur_buf:=abuf+(sizeOfStateTransRec*(ai-1)); // ╤Б╨╝╨╡╤Й╨╡╨╜╨╕╨╡ ╨╜╨░ ╨▓╤Б╤О ╨╖╨░╨┐╨╕╤Б╤М
 {
 	writeln(myid, '| i = ', acur_buf^.ri
 				, ' j = ', acur_buf^.rj
@@ -528,7 +535,7 @@ begin
 end;
 
 function calcStateTransModified(): longint;
-// реализация "многопроцессорная" модификация - Степанюк
+// ╤А╨╡╨░╨╗╨╕╨╖╨░╤Ж╨╕╤П "╨╝╨╜╨╛╨│╨╛╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨╛╤А╨╜╨░╤П" ╨╝╨╛╨┤╨╕╤Д╨╕╨║╨░╤Ж╨╕╤П - ╨б╤В╨╡╨┐╨░╨╜╤О╨║
 var
 	startI: Longint; 
 	ai,aj: longint;
@@ -545,69 +552,71 @@ var
 	tempStateTransCnt: longint;
 begin
 	if myid = 0 then begin
+		// ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣ - 1╤И╤В, TransForBaseState - 1╤И╤В, AllStateTransToBaseState - Nc+1╤И╤В
+		setLength(StateTransArr, 1 + 1 + (Nc+1));
 		i:= 1;
 		AddStateTransForBaseState();
-		// j:= 1. все переходы В базовое состояние 2.2.2. Для оптимизации вынесено из цикла (убрано условие в цикле) 
+		// j:= 1. ╨▓╤Б╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л ╨Т ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ 2.2.2. ╨Ф╨╗╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╨╕ ╨▓╤Л╨╜╨╡╤Б╨╡╨╜╨╛ ╨╕╨╖ ╤Ж╨╕╨║╨╗╨░ (╤Г╨▒╤А╨░╨╜╨╛ ╤Г╤Б╨╗╨╛╨▓╨╕╨╡ ╨▓ ╤Ж╨╕╨║╨╗╨╡) 
 		AddAllStateTransToBaseState();
 
 		tempStateTransCnt:= StateTransCnt;
-		setLength(StateTransArr, StateTransCnt + 1);// пропускаем 0й
+//		setLength(StateTransArr, StateTransCnt + 1);// ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 
 	    startStateTransMPI:= MPI_Wtime;
 	end;
 
-	// 1 посчитать количество заявок для процесса procM
-	// разослать procM
-	// разослать procData: proclmxi, proclmni, procrsti, procrudi
+	// 1 ╨┐╨╛╤Б╤З╨╕╤В╨░╤В╤М ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╨╖╨░╤П╨▓╨╛╨║ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░ procM
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М procM
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М procData: proclmxi, proclmni, procrsti, procrudi
 //    startTemp:= MPI_Wtime; 
 	InitProcStateTrans();
 //	endTemp:= MPI_Wtime;
 //	writeln(myid, '| InitProcStateTrans ', endTemp - startTemp: 9:6);
 //    startTemp:= endTemp;
-	// выполнит цикл расчета для каждого процесса
-	// 2 основной цикл переходов z2<M
-//	for z2:= M-1 downto 1 do begin // по заявкам - показателям
+	// ╨▓╤Л╨┐╨╛╨╗╨╜╨╕╤В ╤Ж╨╕╨║╨╗ ╤А╨░╤Б╤З╨╡╤В╨░ ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
+	// 2 ╨╛╤Б╨╜╨╛╨▓╨╜╨╛╨╣ ╤Ж╨╕╨║╨╗ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ z2<M
+//	for z2:= M-1 downto 1 do begin // ╨┐╨╛ ╨╖╨░╤П╨▓╨║╨░╨╝ - ╨┐╨╛╨║╨░╨╖╨░╤В╨╡╨╗╤П╨╝
 	startI:= 1 + Nc + 1 + ((Nc+1)*(M-1 - procUpM));
-	setLength(procRNS, procM*(Nc+1) + 1); //0й пропукскаем
-	i:= startI;// пропустили обработанные другими процессами
+	setLength(procRNS, procM*(Nc+1) + 1); //0╨╣ ╨┐╤А╨╛╨┐╤Г╨║╤Б╨║╨░╨╡╨╝
+	i:= startI;// ╨┐╤А╨╛╨┐╤Г╤Б╤В╨╕╨╗╨╕ ╨╛╨▒╤А╨░╨▒╨╛╤В╨░╨╜╨╜╤Л╨╡ ╨┤╤А╤Г╨│╨╕╨╝╨╕ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝╨╕
 	procStateTransCnt:=0;
-	for z2:= procUpM downto procDownM do begin // по заявкам - показателям
-		// mpi по z2 - можно посчитать шаг для процесса как ф-ция от номера процесса
+	for z2:= procUpM downto procDownM do begin // ╨┐╨╛ ╨╖╨░╤П╨▓╨║╨░╨╝ - ╨┐╨╛╨║╨░╨╖╨░╤В╨╡╨╗╤П╨╝
+		// mpi ╨┐╨╛ z2 - ╨╝╨╛╨╢╨╜╨╛ ╨┐╨╛╤Б╤З╨╕╤В╨░╤В╤М ╤И╨░╨│ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░ ╨║╨░╨║ ╤Д-╤Ж╨╕╤П ╨╛╤В ╨╜╨╛╨╝╨╡╤А╨░ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 		z2j:=z2+1;
 
-		for z1:=0 to Nc do begin // по ресурсу - количество кусков
-			// mpi инкриментируется линейно -> можно посчитать шаг для процесса
-			// для каждого значения z2 делаем Nc+1 инкремент -> надо передать Nc
+		for z1:=0 to Nc do begin // ╨┐╨╛ ╤А╨╡╤Б╤Г╤А╤Б╤Г - ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╨║╤Г╤Б╨║╨╛╨▓
+			// mpi ╨╕╨╜╨║╤А╨╕╨╝╨╡╨╜╤В╨╕╤А╤Г╨╡╤В╤Б╤П ╨╗╨╕╨╜╨╡╨╣╨╜╨╛ -> ╨╝╨╛╨╢╨╜╨╛ ╨┐╨╛╤Б╤З╨╕╤В╨░╤В╤М ╤И╨░╨│ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
+			// ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П z2 ╨┤╨╡╨╗╨░╨╡╨╝ Nc+1 ╨╕╨╜╨║╤А╨╡╨╝╨╡╨╜╤В -> ╨╜╨░╨┤╨╛ ╨┐╨╡╤А╨╡╨┤╨░╤В╤М Nc
 
-			i:= i + 1; {i=1+Nc..Ns-1, кроме переходов: из базового сост 1шт, в базовое сост Nc шт, и из исходного сост}
+			i:= i + 1; {i=1+Nc..Ns-1, ╨║╤А╨╛╨╝╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓: ╨╕╨╖ ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛ ╤Б╨╛╤Б╤В 1╤И╤В, ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В Nc ╤И╤В, ╨╕ ╨╕╨╖ ╨╕╤Б╤Е╨╛╨┤╨╜╨╛╨│╨╛ ╤Б╨╛╤Б╤В}
 //			writeln(myid, '| i ', i);
-			// для немгновенных управлений 2.1
-			Ku1:=0; u1:=-1000; // не определено
-			// для мгновенных управлений 2.2
+			// ╨┤╨╗╤П ╨╜╨╡╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.1
+			Ku1:=0; u1:=-1000; // ╨╜╨╡ ╨╛╨┐╤А╨╡╨┤╨╡╨╗╨╡╨╜╨╛
+			// ╨┤╨╗╤П ╨╝╨│╨╜╨╛╨▓╨╡╨╜╨╜╤Л╤Е ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ 2.2
 			pijk:= 1;
 
 			z1i:=z1; z2i:=z2; RNSi:=calcRNS(z1i, z2i, nC); 
-			// mpi добавление RNS - вернуть от каждого процесса
+			// mpi ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╨╕╨╡ RNS - ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╛╤В ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 
 			procRNS[i-startI]:= RNSi; //RNS[i]:= RNSi;
-			// переход в базовое состояние 2.2.2 добавлены в AddAllStateTransToBaseState
+			// ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ 2.2.2 ╨┤╨╛╨▒╨░╨▓╨╗╨╡╨╜╤Л ╨▓ AddAllStateTransToBaseState
 			// {z2 < M 2.2.1}
-			// z2j:=z2+1;// вынесено под for z2 ...
+			// z2j:=z2+1;// ╨▓╤Л╨╜╨╡╤Б╨╡╨╜╨╛ ╨┐╨╛╨┤ for z2 ...
 			procAddAllStateTransForOneState();
 		end; // z1
 	end; // z2
-	// mpi - собрать локальные массивы фазовых переходов из процессов
+	// mpi - ╤Б╨╛╨▒╤А╨░╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╡ ╨╝╨░╤Б╤Б╨╕╨▓╤Л ╤Д╨░╨╖╨╛╨▓╤Л╤Е ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ ╨╕╨╖ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨╛╨▓
 //	endTemp:= MPI_Wtime;
 //	writeln(myid, '| StateTrans main Cycle ', endTemp - startTemp: 9:6);
 //    startTemp:= endTemp;
 
-	// 3 вернуть в главный процесс
-	// - кол-во переходов procStateTransCnt
-	// - массив переходов procStateTransArr
-	// - массив procRNS
+	// 3 ╨▓╨╡╤А╨╜╤Г╤В╤М ╨▓ ╨│╨╗╨░╨▓╨╜╤Л╨╣ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б
+	// - ╨║╨╛╨╗-╨▓╨╛ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ procStateTransCnt
+	// - ╨╝╨░╤Б╤Б╨╕╨▓ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ procStateTransArr
+	// - ╨╝╨░╤Б╤Б╨╕╨▓ procRNS
     	startTemp1:= MPI_Wtime;
 
-	// - кол-во переходов procStateTransCnt
+	// - ╨║╨╛╨╗-╨▓╨╛ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ procStateTransCnt
 	MPI_SEND(@procStateTransCnt, 1, MPI_INT, 0, teg, MPI_COMM_WORLD);
 	if myid = 0 then begin
 		setLength(procStateTransCntArr, numprocs);
@@ -620,7 +629,7 @@ begin
 //		writeln(myid, '| MPI_BSEND(procStateTrans: MPI_RECV(@procStateTransCntArr[ai] ', endTemp1 - startTemp1: 9:6);
 //    	startTemp1:= endTemp1;
 
-	// - массив переходов procStateTransArr
+	// - ╨╝╨░╤Б╤Б╨╕╨▓ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓ procStateTransArr
     procStateTransSendBufSize := procStateTransCnt*sizeOfStateTransRec;
 	try
 		getMem(procStateTransSendBuf, procStateTransSendBufSize);
@@ -696,9 +705,9 @@ begin
 //	writeln(myid, '| MPI_BSEND(procStateTrans ', endTemp - startTemp: 9:6);
 //    startTemp:= endTemp;
 
-	// - массив procRNS
+	// - ╨╝╨░╤Б╤Б╨╕╨▓ procRNS
 //	writeln(myid, '| before procRNS');
-	sendCnt:= procM*(Nc+1); //0й пропускаем . д.б равно length(procRNS)-1
+	sendCnt:= procM*(Nc+1); //0╨╣ ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ . ╨┤.╨▒ ╤А╨░╨▓╨╜╨╛ length(procRNS)-1
 //	sendBuf, recBuf: pointer;
 	sendBufSize:= sizeOfLongint*sendCnt;
 	try
@@ -717,10 +726,10 @@ begin
 				try
 					getMem(recvBuf, recvBufSize);
 					MPI_RECV(recvBuf, recvCnt, MPI_INT, ai, teg, MPI_COMM_WORLD, status);
-					// добавить из буфера в RNS
+					// ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М ╨╕╨╖ ╨▒╤Г╤Д╨╡╤А╨░ ╨▓ RNS
 					startI:= 1 + (Nc + 1) + ((Nc+1)*(M-1-procUpM));
-//					for aj:= 1 to length(aa)-1 do begin	// пропускаем 0й элемент
-					for aj:= 1 to procMArr[ai]*(Nc+1) do begin	// пропускаем 0й элемент
+//					for aj:= 1 to length(aa)-1 do begin	// ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣ ╤Н╨╗╨╡╨╝╨╡╨╜╤В
+					for aj:= 1 to procMArr[ai]*(Nc+1) do begin	// ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣ ╤Н╨╗╨╡╨╝╨╡╨╜╤В
 						acur_buf:= recvBuf+(sizeOfLongint*(aj-1));
 						RNS[startI+aj]:= acur_buf^;
 //						writeln('RNS[', startI+aj,'] = ', acur_buf^);
@@ -750,17 +759,24 @@ begin
 //    startTemp:= endTemp;
 
 
-	//i:=Ns; добавить все переходы для исходного состояния
+	//i:=Ns; ╨┤╨╛╨▒╨░╨▓╨╕╤В╤М ╨▓╤Б╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л ╨┤╨╗╤П ╨╕╤Б╤Е╨╛╨┤╨╜╨╛╨│╨╛ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╤П
 	if myid = 0 then begin
 	    endStateTransMPI:= MPI_Wtime;
 		totalStateTransMPI:=totalStateTransMPI + endStateTransMPI-startStateTransMPI;
 		writeln(myid, '| totalStateTransMPI ', totalStateTransMPI: 9:6);
 
-		//Скопировать в ноды от номера перед главным циклом до текущего
+		//╨б╨║╨╛╨┐╨╕╤А╨╛╨▓╨░╤В╤М ╨▓ ╨╜╨╛╨┤╤Л ╨╛╤В ╨╜╨╛╨╝╨╡╤А╨░ ╨┐╨╡╤А╨╡╨┤ ╨│╨╗╨░╨▓╨╜╤Л╨╝ ╤Ж╨╕╨║╨╗╨╛╨╝ ╨┤╨╛ ╤В╨╡╨║╤Г╤Й╨╡╨│╨╛
 //		writeln('tempStateTransCnt+1 = ', tempStateTransCnt+1
 //			, ' StateTransCnt = ', StateTransCnt
 //			, ' length(StateTransArr) = ', length(StateTransArr));
-		for ai:= tempStateTransCnt+1 to StateTransCnt do begin
+
+//		setLength(StateTransArr, 0);
+
+//		writeln(' before AddAllStateTransForInitialState ');
+
+		AddAllStateTransForInitialState();
+
+		for ai:= 1 to StateTransCnt do begin
 			with StateTransArr[ai] do begin
 				addStateTransNode(
     			  ri, rj, rk, rpijk, rrijk,
@@ -770,12 +786,8 @@ begin
 			end;
 		end;
 
+		// ╨Я╨╡╤А╨╡╨╜╨╡╤Б╤В╨╕ ╨▓ Main
 		setLength(StateTransArr, 0);
-
-//		writeln(' before AddAllStateTransForInitialState ');
-
-		AddAllStateTransForInitialState();
-
 //		writeln(' after AddAllStateTransForInitialState ');
 	end;
 end;
