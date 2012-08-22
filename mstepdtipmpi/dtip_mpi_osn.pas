@@ -1,21 +1,21 @@
 var
-//    ArrV: array of TStepArrayOfDbl; // веса. индексы: шаг, сост
-//    ArrD: array of TStepArrayOfInt; //оптим.упр.индексы: шаг, упр
-//    arrG: TStepArrayOfDbl; //усредненный шаговый доход
-    ArrVCurrStep: array of Double; // веса. индексы: сост
-    ArrDCurrStep: array of longint; //оптим.упр.индексы: упр
-    ArrDCurrStepTemp: array of longint; //оптим.упр.индексы: упр
-    ArrVPrevStep: array of Double; // веса. индексы: сост
-    ArrDPrevStep: array of longint; //оптим.упр.индексы: упр
-    arrG: array of Double; //усредненный шаговый доход
+//    ArrV: array of TStepArrayOfDbl; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+//    ArrD: array of TStepArrayOfInt; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
+//    arrG: TStepArrayOfDbl; //╤Г╤Б╤А╨╡╨┤╨╜╨╡╨╜╨╜╤Л╨╣ ╤И╨░╨│╨╛╨▓╤Л╨╣ ╨┤╨╛╤Е╨╛╨┤
+    ArrVCurrStep: array of Double; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+    ArrDCurrStep: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+    ArrDCurrStepTemp: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+    ArrVPrevStep: array of Double; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+    ArrDPrevStep: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+    arrG: array of Double; //╤Г╤Б╤А╨╡╨┤╨╜╨╡╨╜╨╜╤Л╨╣ ╤И╨░╨│╨╛╨▓╤Л╨╣ ╨┤╨╛╤Е╨╛╨┤
     currStep: longint;
-    MaxStepCnt: longint; // Количество шагов. Есть еще нулевой шаг. Д.б. динамическим.
+    MaxStepCnt: longint; // ╨Ъ╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╤И╨░╨│╨╛╨▓. ╨Х╤Б╤В╤М ╨╡╤Й╨╡ ╨╜╤Г╨╗╨╡╨▓╨╛╨╣ ╤И╨░╨│. ╨Ф.╨▒. ╨┤╨╕╨╜╨░╨╝╨╕╤З╨╡╤Б╨║╨╕╨╝.
 
-    procArrVCurrStep: array of Double; // веса. индексы: сост
-    procArrDCurrStep: array of longint; //оптим.упр.индексы: упр
-    procArrDCurrStepTemp: array of longint; //оптим.упр.индексы: упр
-    procArrVPrevStep: array of Double; // веса. индексы: сост
-//    procArrDPrevStep: array of longint; //оптим.упр.индексы: упр
+    procArrVCurrStep: array of Double; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+    procArrDCurrStep: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+    procArrDCurrStepTemp: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+    procArrVPrevStep: array of Double; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+//    procArrDPrevStep: array of longint; //╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
 	procSubArrVDispl, procSubArrDDispl: longint;
 	procSubArrDDisplTemp: longint;
 	procSubArrVDispls, procSubArrDDispls: array of longint;
@@ -40,20 +40,22 @@ begin
       Result := 1;
 end;
 
-// передать данные и вынести в XML
+// ╨┐╨╡╤А╨╡╨┤╨░╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡ ╨╕ ╨▓╤Л╨╜╨╡╤Б╤В╨╕ ╨▓ XML
 function addOsnNode():boolean;
 var
 	ai, ires: longint;
 	dres: double;
 	astr: string;
 begin
+	if not addOsnSteps then exit;
+
 	osnStepNode:=aDoc.CreateElement('osnStepNode');
 
 	addIntAttribute(osnStepNode, 'n1', currStep);
 	addDblAttribute(osnStepNode, 'g_n1', arrG[currStep]);
 
 	astr:='d=';
-	for ai:=low(ArrDCurrStep)+1 to high(ArrDCurrStep) do begin // пропускаем 0й
+	for ai:=low(ArrDCurrStep)+1 to high(ArrDCurrStep) do begin // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 		ires:= ArrDCurrStep[ai];
 		astr:= astr + Format('%4d',[ires]) + ';';
 	end;
@@ -61,7 +63,7 @@ begin
 	osnStepNode.AppendChild(commentNode);
 
 	astr:='v=';
-	for ai:=low(ArrVcurrStep)+1 to high(ArrVcurrStep) do begin // пропускаем 0й
+	for ai:=low(ArrVcurrStep)+1 to high(ArrVcurrStep) do begin // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 		dres:=ArrVcurrStep[ai];
 		astr:= astr + Format('%4f',[dres]) + ';';
 	end;
@@ -70,12 +72,12 @@ begin
 
 	ires := IsSolved();
 	if iRes  = 1 then begin
-//    s:= 'Достигнута точность 0.01 по g. Вычисления остановлены.';
+//    s:= '╨Ф╨╛╤Б╤В╨╕╨│╨╜╤Г╤В╨░ ╤В╨╛╤З╨╜╨╛╤Б╤В╤М 0.01 ╨┐╨╛ g. ╨Т╤Л╤З╨╕╤Б╨╗╨╡╨╜╨╕╤П ╨╛╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╤Л.';
 	    astr:= 'done. delta(g)<0.001';
 		addStrAttribute(osnStepNode, 'result', astr);
 	end
 	else if iRes = -1 then begin
-//  s:= 'Превышено максимальное количество шагов (' + IntToStr(MaxStepCnt) + ')' + 'Вычисления остановлены.'
+//  s:= '╨Я╤А╨╡╨▓╤Л╤И╨╡╨╜╨╛ ╨╝╨░╨║╤Б╨╕╨╝╨░╨╗╤М╨╜╨╛╨╡ ╨║╨╛╨╗╨╕╤З╨╡╤Б╤В╨▓╨╛ ╤И╨░╨│╨╛╨▓ (' + IntToStr(MaxStepCnt) + ')' + '╨Т╤Л╤З╨╕╤Б╨╗╨╡╨╜╨╕╤П ╨╛╤Б╤В╨░╨╜╨╛╨▓╨╗╨╡╨╜╤Л.'
 	    astr:= 'stopped on MaxStepCnt' + IntToStr(MaxStepCnt);
 		addStrAttribute(osnStepNode, 'result', astr);
 	end;
@@ -85,28 +87,48 @@ end;
 
 
 function Calc_qijk: boolean;
-// оасчет непосредственного дохода
-// м.б. совмещен с setAllJbyRNS()
+// ╤А╨░╤Б╤З╨╡╤В ╨╜╨╡╨┐╨╛╤Б╤А╨╡╨┤╤Б╤В╨▓╨╡╨╜╨╜╨╛╨│╨╛ ╨┤╨╛╤Е╨╛╨┤╨░
+// !!!╤Б╨╛╨▓╨╝╨╡╤Й╨╡╨╜ ╤Б setAllJbyRNS()
 var
 	aVal: double;
 	aNextNode: TDOMNode;
+	ai, aj: longint;
 begin
-// qik=sum_po_j(pijk*rijk) сумма призведений дохода от перехода из и в j при к-м управлении
+// qik=sum_po_j(pijk*rijk) ╤Б╤Г╨╝╨╝╨░ ╨┐╤А╨╕╨╖╨▓╨╡╨┤╨╡╨╜╨╕╨╣ ╨┤╨╛╤Е╨╛╨┤╨░ ╨╛╤В ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨░ ╨╕╨╖ ╨╕ ╨▓ j ╨┐╤А╨╕ ╨║-╨╝ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╕
 //  for j:=1 to Ns do begin
 //    Result:= Result + Arr
 //  end;
 
-// поскольку 1) для каждого i есть только одно сост j куда переходить при к-м управлении
-// 2) вероятность перехода =1
-// то qijk==rijk
-// удобнее просто перебрать все фазовые переходы
-// использует XML
-	aNextNode:= stateTransRootNode.firstChild;
+// ╨┐╨╛╤Б╨║╨╛╨╗╤М╨║╤Г 1) ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ i ╨╡╤Б╤В╤М ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╤Б╨╛╤Б╤В j ╨║╤Г╨┤╨░ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╕╤В╤М ╨┐╤А╨╕ ╨║-╨╝ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╕
+// 2) ╨▓╨╡╤А╨╛╤П╤В╨╜╨╛╤Б╤В╤М ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨░ =1
+// ╤В╨╛ qijk==rijk
+// ╤Г╨┤╨╛╨▒╨╜╨╡╨╡ ╨┐╤А╨╛╤Б╤В╨╛ ╨┐╨╡╤А╨╡╨▒╤А╨░╤В╤М ╨▓╤Б╨╡ ╤Д╨░╨╖╨╛╨▓╤Л╨╡ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╤Л
+// ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В XML
+{	aNextNode:= stateTransRootNode.firstChild;
 //	acnt:= 0;
 	repeat
 //		inc(acnt);
 //		if acnt> StateTransCnt then break;
 		aval:= getDblAttrValue(aNextNode, 'rijk', -1);
+		addDblAttribute(aNextNode, 'qijk', aVal);
+		aNextNode:= aNextNode.NextSibling;
+	until not assigned(aNextNode);
+}
+
+	for ai:=1 to StateTransCnt do begin
+		//╨╜╨░╨╣╤В╨╕ ╨╜╨╛╨┤╤Г ╨╕ ╨╕╨╖╨╝╨╡╨╜╨╕╤В╤М j
+		StateTransArr[ai].rqijk:= StateTransArr[ai].rrijk;
+	end;
+
+// ╨╕╤Б╨┐╨╛╨╗╤М╨╖╤Г╨╡╤В XML
+// ╨▓╤Л╨▓╨╛╨┤ ╨▓ xml
+	if not addStateTrans then exit;
+	aNextNode:= stateTransRootNode.firstChild;
+	ai:= 0;
+	repeat
+		inc(ai);
+		if ai> StateTransCnt then break;
+		aval:= StateTransArr[ai].rqijk;//getDblAttrValue(aNextNode, 'rijk', -1);
 		addDblAttribute(aNextNode, 'qijk', aVal);
 		aNextNode:= aNextNode.NextSibling;
 	until not assigned(aNextNode);
@@ -134,18 +156,53 @@ begin
 			setLength(ArrJ[aiCurrent], akv1+1);
 			setLength(ArrR[aiCurrent], akv1+1);
 			setLength(ArrQ[aiCurrent], akv1+1);
-			ArrKv1[aiCurrent]:= akv1; //для поиска kv1
+			ArrKv1[aiCurrent]:= akv1; //╨┤╨╗╤П ╨┐╨╛╨╕╤Б╨║╨░ kv1
 		end;
 		ak:=getIntAttrValue(aNextNode, 'k', -1);
-//		writeln('ai ', ai, ' akv1 ', akv1, ' ak ', ak);
 //		if akv1<1 then 
 //			readln();
 		ArrJ[aiCurrent, ak]:= getIntAttrValue(aNextNode, 'j', -1);
 		ArrR[aiCurrent, ak]:= getDblAttrValue(aNextNode, 'rijk', -1);
 		ArrQ[aiCurrent, ak]:= getDblAttrValue(aNextNode, 'qijk', -1);
+//		writeln('ai ', ai, ' akv1 ', akv1, ' ak ', ak
+//				, ' ArrJ ', ArrJ[aiCurrent, ak], ' ArrR ', ArrR[aiCurrent, ak]:9:6, ' ArrQ ', ArrQ[aiCurrent, ak]:9:6);
 
 		aNextNode:= aNextNode.NextSibling;
 	until not assigned(aNextNode);
+end;
+
+function InitDataArrv2(): boolean;
+var
+//	aNextNode: TDOMNode;
+	asttr, ai, aiCurrent, ak, akv1, aval: longint;
+begin
+	SetLength(ArrJ, Ns+1);
+	SetLength(ArrR, Ns+1);
+	SetLength(ArrQ, Ns+1);
+	SetLength(ArrKv1, Ns+1);
+
+	aiCurrent:=low(longint);
+	asttr:=1;
+	repeat
+		ai:= StateTransArr[asttr].ri;
+		if ai <> aiCurrent then begin
+			aiCurrent:= ai;
+			akv1:= StateTransArr[asttr].rkv1;
+			if akv1=0 then
+				akv1:= StateTransArr[asttr].rku1;
+			setLength(ArrJ[aiCurrent], akv1+1);
+			setLength(ArrR[aiCurrent], akv1+1);
+			setLength(ArrQ[aiCurrent], akv1+1);
+			ArrKv1[aiCurrent]:= akv1; //╨┤╨╗╤П ╨┐╨╛╨╕╤Б╨║╨░ kv1
+		end;
+		ak:=StateTransArr[asttr].rk;
+		ArrJ[aiCurrent, ak]:= StateTransArr[asttr].rj;//getIntAttrValue(aNextNode, 'j', -1);
+		ArrR[aiCurrent, ak]:= StateTransArr[asttr].rrijk;//getDblAttrValue(aNextNode, 'rijk', -1);
+		ArrQ[aiCurrent, ak]:= StateTransArr[asttr].rqijk;//getDblAttrValue(aNextNode, 'qijk', -1);
+//		writeln('ai ', ai, ' akv1 ', akv1, ' ak ', ak
+//				, ' ArrJ ', ArrJ[aiCurrent, ak], ' ArrR ', ArrR[aiCurrent, ak]:9:6, ' ArrQ ', ArrQ[aiCurrent, ak]:9:6);
+		inc(asttr);
+	until asttr>StateTransCnt;
 end;
 
 function FinalizeDataArr(): boolean;
@@ -176,44 +233,45 @@ var
   ai, aj: longint;
 begin
 //  Result := 0;
-//Инициализация
+//╨Ш╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╤П
 	MaxStepCnt := 100;
 
-	SetLength(ArrVCurrStep, Ns+1); // пропускаем 0й
-	SetLength(ArrVPrevStep, Ns+1); // пропускаем 0й
+	SetLength(ArrVCurrStep, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
+	SetLength(ArrVPrevStep, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 //	writeln('SetLength(ArrVCurrStep, Ns ', Ns);
 //	for ai := Low(ArrV) To High(ArrV) do
-//		SetLength(ArrV[ai], MaxStepCnt+1); //!!! место для оптимизации -
-    // можно инициализацию и размер менять по ходу расчёта со всеми прочими
-    // прибамбасами c инициализацией порциями наперёд
-	SetLength(ArrDCurrStep, Ns+1); // пропускаем 0й
-	SetLength(ArrDcurrStepTemp, Ns+1); // пропускаем 0й
+//		SetLength(ArrV[ai], MaxStepCnt+1); //!!! ╨╝╨╡╤Б╤В╨╛ ╨┤╨╗╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╨╕ -
+    // ╨╝╨╛╨╢╨╜╨╛ ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╤О ╨╕ ╤А╨░╨╖╨╝╨╡╤А ╨╝╨╡╨╜╤П╤В╤М ╨┐╨╛ ╤Е╨╛╨┤╤Г ╤А╨░╤Б╤З╤С╤В╨░ ╤Б╨╛ ╨▓╤Б╨╡╨╝╨╕ ╨┐╤А╨╛╤З╨╕╨╝╨╕
+    // ╨┐╤А╨╕╨▒╨░╨╝╨▒╨░╤Б╨░╨╝╨╕ c ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╨╡╨╣ ╨┐╨╛╤А╤Ж╨╕╤П╨╝╨╕ ╨╜╨░╨┐╨╡╤А╤С╨┤
+	SetLength(ArrDCurrStep, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
+	SetLength(ArrDcurrStepTemp, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 	
-	SetLength(ArrDPrevStep, Ns+1); // пропускаем 0й
+	SetLength(ArrDPrevStep, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 //	writeln('SetLength(ArrDCurrStep, Ns ', Ns);
 //	for ai := Low(ArrD) To High(ArrD) do
-//		SetLength(ArrD[ai], MaxStepCnt+1); //!!! место для оптимизации -
-    // можно инициализацию и размер менять по ходу расчёта со всеми прочими
-    // прибамбасами c инициализацией порциями наперёд
+//		SetLength(ArrD[ai], MaxStepCnt+1); //!!! ╨╝╨╡╤Б╤В╨╛ ╨┤╨╗╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╨╕ -
+    // ╨╝╨╛╨╢╨╜╨╛ ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╤О ╨╕ ╤А╨░╨╖╨╝╨╡╤А ╨╝╨╡╨╜╤П╤В╤М ╨┐╨╛ ╤Е╨╛╨┤╤Г ╤А╨░╤Б╤З╤С╤В╨░ ╤Б╨╛ ╨▓╤Б╨╡╨╝╨╕ ╨┐╤А╨╛╤З╨╕╨╝╨╕
+    // ╨┐╤А╨╕╨▒╨░╨╝╨▒╨░╤Б╨░╨╝╨╕ c ╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨░╤Ж╨╕╨╡╨╣ ╨┐╨╛╤А╤Ж╨╕╤П╨╝╨╕ ╨╜╨░╨┐╨╡╤А╤С╨┤
 	SetLength(ArrG, MaxStepCnt+1);
 
 
-// массивы весов и управлений для 0-го шага
+// ╨╝╨░╤Б╤Б╨╕╨▓╤Л ╨▓╨╡╤Б╨╛╨▓ ╨╕ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ ╨┤╨╗╤П 0-╨│╨╛ ╤И╨░╨│╨░
 	currStep:=0;
 	for ai:=1 to Ns do begin
-		ArrVCurrStep[ai]:=0; // веса. индексы: шаг, сост
-		ArrDCurrStep[ai]:=0; // оптим.упр.индексы: шаг, упр
-//		ArrVprevStep[ai-1]:=0; // веса. индексы: шаг, сост
-//		ArrDprevStep[ai-1]:=0; // оптим.упр.индексы: шаг, упр
+		ArrVCurrStep[ai]:=0; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+		ArrDCurrStep[ai]:=0; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
+//		ArrVprevStep[ai-1]:=0; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+//		ArrDprevStep[ai-1]:=0; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
 	end;
 	arrG[currStep]:=0;
 
-	initDataArr();
-// массивы весов и управлений для
-//	for aj:=1 to MaxStepCnt do begin // 0 уже проинициализирован выше
+//	initDataArr();
+	initDataArrv2();
+// ╨╝╨░╤Б╤Б╨╕╨▓╤Л ╨▓╨╡╤Б╨╛╨▓ ╨╕ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╣ ╨┤╨╗╤П
+//	for aj:=1 to MaxStepCnt do begin // 0 ╤Г╨╢╨╡ ╨┐╤А╨╛╨╕╨╜╨╕╤Ж╨╕╨░╨╗╨╕╨╖╨╕╤А╨╛╨▓╨░╨╜ ╨▓╤Л╤И╨╡
 //		for ai:=1 to Ns do begin
-//			ArrV[ai-1, aj]:=low(longint); // веса. индексы: шаг, сост
-//			ArrD[ai-1, aj]:=low(longint); // оптим.упр.индексы: шаг, упр
+//			ArrV[ai-1, aj]:=low(longint); // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+//			ArrD[ai-1, aj]:=low(longint); // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
 //		end;
 //	end;
 
@@ -225,12 +283,12 @@ var
 	ai: longint;
 begin
 //	for ai := Low(ArrV) To High(ArrV) do
-//		SetLength(ArrV[ai], 0); //!!! место для оптимизации -
+//		SetLength(ArrV[ai], 0); //!!! ╨╝╨╡╤Б╤В╨╛ ╨┤╨╗╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╨╕ -
 	SetLength(ArrVCurrStep, 0);
 	SetLength(ArrVPrevStep, 0);
 
 //	for ai := Low(ArrD) To High(ArrD) do
-//		SetLength(ArrD[ai], 0); //!!! место для оптимизации -
+//		SetLength(ArrD[ai], 0); //!!! ╨╝╨╡╤Б╤В╨╛ ╨┤╨╗╤П ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╨╕ -
 	SetLength(ArrDCurrStep, 0);
 	SetLength(ArrDCurrStepTemp, 0);
 	SetLength(ArrDPrevStep, 0);
@@ -246,10 +304,10 @@ var
 	ai: longint;
 begin
 	for ai:=1 to Ns do begin
-		ArrVprevStep[ai]:=ArrVcurrStep[ai]; // веса. индексы: шаг, сост
-		ArrDprevStep[ai]:=ArrDcurrStep[ai]; // оптим.упр.индексы: шаг, упр
-		ArrVcurrStep[ai]:=low(longint); // веса. индексы: шаг, сост
-		ArrDcurrStep[ai]:=low(longint); // оптим.упр.индексы: шаг, упр
+		ArrVprevStep[ai]:=ArrVcurrStep[ai]; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+		ArrDprevStep[ai]:=ArrDcurrStep[ai]; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
+		ArrVcurrStep[ai]:=low(longint); // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+		ArrDcurrStep[ai]:=low(longint); // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
 	end;
 end;
 
@@ -258,10 +316,10 @@ var
 	ai: longint;
 begin
 	for ai:=1 to Ns do begin
-		procArrVprevStep[ai]:=procArrVcurrStep[ai]; // веса. индексы: шаг, сост
-//		procArrDprevStep[ai]:=procArrDcurrStep[ai]; // оптим.упр.индексы: шаг, упр
-		procArrVcurrStep[ai]:=low(longint); // веса. индексы: шаг, сост
-//		procArrDcurrStep[ai]:=low(longint); // оптим.упр.индексы: шаг, упр
+		procArrVprevStep[ai]:=procArrVcurrStep[ai]; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+//		procArrDprevStep[ai]:=procArrDcurrStep[ai]; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
+		procArrVcurrStep[ai]:=low(longint); // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Б╨╛╤Б╤В
+//		procArrDcurrStep[ai]:=low(longint); // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤И╨░╨│, ╤Г╨┐╤А
 	end;
 end;
 
@@ -348,7 +406,20 @@ function get_v(ai, ak: longint; var av1: longint; var av2: longint): boolean;
 var
 	aNextNode: TDOMNode;
 	ari, ark: longint;
+	asttr: longint;
 begin
+	asttr:=1;
+	repeat
+		ari:= StateTransArr[asttr].ri; //ari:=getIntAttrValue(aNextNode, 'i', -1);
+		ark:= StateTransArr[asttr].rk; //ark:=getIntAttrValue(aNextNode, 'k', -1);
+		if ((ari=ai) and (ark=ak)) then begin
+			av1:= StateTransArr[asttr].rv1; //getIntAttrValue(aNextNode, 'v1', -1);
+			av2:= StateTransArr[asttr].rv2; //getIntAttrValue(aNextNode, 'v2', -1);
+			break;
+		end;
+		inc(asttr);
+	until asttr>StateTransCnt;
+{
 	aNextNode:= stateTransRootNode.firstChild;
 	repeat
 		ari:=getIntAttrValue(aNextNode, 'i', -1);
@@ -360,11 +431,11 @@ begin
 		end;
 		aNextNode:= aNextNode.NextSibling;
 	until not assigned(aNextNode);
-
+}
 end;
 
-function IterpretResultsAsNode(): string;
-// возвращает строку трассировки переходов
+function InterpretResultsAsNode(): string;
+// ╨▓╨╛╨╖╨▓╤А╨░╤Й╨░╨╡╤В ╤Б╤В╤А╨╛╨║╤Г ╤В╤А╨░╤Б╤Б╨╕╤А╨╛╨▓╨║╨╕ ╨┐╨╡╤А╨╡╤Е╨╛╨┤╨╛╨▓
 var
   i, j, k, v1, v2: longint;
   rijk, rsum, vsum: double;
@@ -375,7 +446,7 @@ begin
 	s2:='';
 	rsum:= 0;
 	vsum:= 0;
-	//  пропускаем переход из базового
+	//  ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨╕╨╖ ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛
 	k:= arrDcurrStep[i];
 	j:= get_j(i, k);
 
@@ -394,7 +465,7 @@ begin
 		vsum:= vsum + v2;
 
 		s:= format('i=%5d - k=%5d -> j= %5d', [i,k,j]);
-		rxi[v1]:= v2; // оптимальный ресурс
+		rxi[v1]:= v2; // ╨╛╨┐╤В╨╕╨╝╨░╨╗╤М╨╜╤Л╨╣ ╤А╨╡╤Б╤Г╤А╤Б
 		s1:= s1 + #13#10 + s;
 	until j=1;
 
@@ -406,7 +477,7 @@ begin
 
 end;
 
-function IterpretResults(): string;
+function InterpretResults(): string;
 var
   i, j, k, v1, v2: longint;
   rijk, rsum, vsum: double;
@@ -418,14 +489,14 @@ begin
   s2:='';
   rsum:= 0;
   vsum:= 0;
-//  пропускаем переход из базового
+//  ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨╕╨╖ ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛
   k:= arrDcurrStep[i];
   j:= get_j(i, k);
 
-  s1:='в сост i=' + IntToStr(i) + #13#10
-    + ' исп упр k= ' + IntToStr(k) + #13#10
-    + ' переход в j= ' + IntToStr(j) + #13#10
-    + ' из базового сост в начальное'
+  s1:='╨▓ ╤Б╨╛╤Б╤В i=' + IntToStr(i) + #13#10
+    + ' ╨╕╤Б╨┐ ╤Г╨┐╤А k= ' + IntToStr(k) + #13#10
+    + ' ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ j= ' + IntToStr(j) + #13#10
+    + ' ╨╕╨╖ ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛ ╤Б╨╛╤Б╤В ╨▓ ╨╜╨░╤З╨░╨╗╤М╨╜╨╛╨╡'
     ;
     writeln(s1);
   i:=j;
@@ -441,23 +512,23 @@ begin
     vsum:= vsum + v2;
 
     if j=1 then begin
-      s:= 'в сост i=' + IntToStr(i) + #13#10
-        + ' исп упр k= ' + IntToStr(k) + #13#10
-        + ' переход в j= ' + IntToStr(j) + #13#10
-        + ' возврат в базовое состояние'
+      s:= '╨▓ ╤Б╨╛╤Б╤В i=' + IntToStr(i) + #13#10
+        + ' ╨╕╤Б╨┐ ╤Г╨┐╤А k= ' + IntToStr(k) + #13#10
+        + ' ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ j= ' + IntToStr(j) + #13#10
+        + ' ╨▓╨╛╨╖╨▓╤А╨░╤В ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡'
         ;
     end
     else begin
 //      ArrReq[v1-1].rxi := v2;
-//      ArrReq[v1-1].rqi := rijk; //! под вопросом - проверить что rijk совпадает с Rxi*rudi
-      s:= 'в сост i=' + IntToStr(i) + #13#10
-        + ' исп упр k= ' + IntToStr(k) + #13#10
-        + ' переход в j= ' + IntToStr(j) + #13#10
-        + ' на заявку v1= ' + IntToStr(v1) + #13#10
-        + ' ресурс v2= ' + IntToStr(v2) + #13#10
-        + ' доход перех rijk = ' + FloatToStr(rijk) + #13#10
-        + ' всего ресурса vsum = ' + FloatToStr(vsum) + #13#10
-        + ' всего дохода rsum = ' + FloatToStr(rsum)
+//      ArrReq[v1-1].rqi := rijk; //! ╨┐╨╛╨┤ ╨▓╨╛╨┐╤А╨╛╤Б╨╛╨╝ - ╨┐╤А╨╛╨▓╨╡╤А╨╕╤В╤М ╤З╤В╨╛ rijk ╤Б╨╛╨▓╨┐╨░╨┤╨░╨╡╤В ╤Б Rxi*rudi
+      s:= '╨▓ ╤Б╨╛╤Б╤В i=' + IntToStr(i) + #13#10
+        + ' ╨╕╤Б╨┐ ╤Г╨┐╤А k= ' + IntToStr(k) + #13#10
+        + ' ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╨▓ j= ' + IntToStr(j) + #13#10
+        + ' ╨╜╨░ ╨╖╨░╤П╨▓╨║╤Г v1= ' + IntToStr(v1) + #13#10
+        + ' ╤А╨╡╤Б╤Г╤А╤Б v2= ' + IntToStr(v2) + #13#10
+        + ' ╨┤╨╛╤Е╨╛╨┤ ╨┐╨╡╤А╨╡╤Е rijk = ' + FloatToStr(rijk) + #13#10
+        + ' ╨▓╤Б╨╡╨│╨╛ ╤А╨╡╤Б╤Г╤А╤Б╨░ vsum = ' + FloatToStr(vsum) + #13#10
+        + ' ╨▓╤Б╨╡╨│╨╛ ╨┤╨╛╤Е╨╛╨┤╨░ rsum = ' + FloatToStr(rsum)
         ;
 		s2:=s2 + 'x_' + IntToStr(v1) + ' =   ' + Format('%d',[v2]) + ' ';
     end;
@@ -472,7 +543,7 @@ begin
 
 	writeln(s2);
 	writeln('qSumMax ', rsum: 9:6);
-//  Result:= s1 + #13#10 + 'Возврат в базовое состояние 1' + #13#10;
+//  Result:= s1 + #13#10 + '╨Т╨╛╨╖╨▓╤А╨░╤В ╨▓ ╨▒╨░╨╖╨╛╨▓╨╛╨╡ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╡ 1' + #13#10;
 
   Result:= '';
 
@@ -488,13 +559,13 @@ var
 	var
 		ak: longint;
 	begin
-    // поиск max по ak
-		// mpi найти локальный максимум по каждому процессу - начало
+    // ╨┐╨╛╨╕╤Б╨║ max ╨┐╨╛ ak
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨╜╨░╤З╨░╨╗╨╛
 		axi2_max:= -1000;//low(double);
 		ak_max:= 1;
 		for ak:= 1 to get_kv1(ai) do begin
 			ai_j:= get_j(ai, ak);
-			if ai_j=-1000 then break; // если законились rijk <> low(longint)
+			if ai_j=-1000 then break; // ╨╡╤Б╨╗╨╕ ╨╖╨░╨║╨╛╨╜╨╕╨╗╨╕╤Б╤М rijk <> low(longint)
 			axi2:= ag_n1 + get_rijk(ai, ak)
 				+ (1/cw)*arrVcurrStep[ai_j]
 				- ((1/cw)-1)*arrVprevStep[ai_j];
@@ -503,8 +574,8 @@ var
 				ak_max:=ak;
 			end;
     	end;
-		// mpi найти локальный максимум по каждому процессу - конец
-		// mpi вернуть локальный макс. Определить глобальный макс
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨║╨╛╨╜╨╡╤Ж
+		// mpi ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б. ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
 		axi:= axi2_max;
 		avi_n1:= (1-cW)*arrVprevStep[ai] + cW*axi - cw*ag_n1;
 		ArrVcurrStep[ai]:= avi_n1;
@@ -512,30 +583,30 @@ var
 	end;
 
 begin
-// Цикл по шагам
+// ╨ж╨╕╨║╨╗ ╨┐╨╛ ╤И╨░╨│╨░╨╝
 	copyArrCurrToPrev();
-	currStep:= currStep+1; //тек шаг = n+1
+	currStep:= currStep+1; //╤В╨╡╨║ ╤И╨░╨│ = n+1
 //	writeln('currStep ', currStep);
 //	readLn();
-// вес базового сост для любого шага 0
+// ╨▓╨╡╤Б ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛ ╤Б╨╛╤Б╤В ╨┤╨╗╤П ╨╗╤О╨▒╨╛╨│╨╛ ╤И╨░╨│╨░ 0
 	aibase:=1;
-	ArrVcurrStep[aibase]:=0; // веса. индексы: сост
-	ArrDcurrStep[aibase]:=1; // оптим.упр.индексы: упр
-	// в баз сост только одно управление и только 1 переход с вероятн 1
+	ArrVcurrStep[aibase]:=0; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+	ArrDcurrStep[aibase]:=1; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+	// ╨▓ ╨▒╨░╨╖ ╤Б╨╛╤Б╤В ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╨╕ ╤В╨╛╨╗╤М╨║╨╛ 1 ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╤Б ╨▓╨╡╤А╨╛╤П╤В╨╜ 1
 	ak:=1;
 	ag_n1:= get_qik(aibase, ak) + arrVprevStep[get_j(aibase, ak)];
 	arrG[currStep]:=ag_n1;
 
 	// MPI 
-	// ВНЕ ШАГА
-	// посчитать кол-во сост для каждого процесса. м.б. внутри процесса чтобы избежать передачи
-	// разослать кол-во состояний
-	// разослать данные arrJ, ArrQ, ArrKv1
-	// ВНУТРИ ШАГА
-	// найти локальный макс
-	// вернуть макс и номер сост
+	// ╨Т╨Э╨Х ╨и╨Р╨У╨Р
+	// ╨┐╨╛╤Б╤З╨╕╤В╨░╤В╤М ╨║╨╛╨╗-╨▓╨╛ ╤Б╨╛╤Б╤В ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░. ╨╝.╨▒. ╨▓╨╜╤Г╤В╤А╨╕ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░ ╤З╤В╨╛╨▒╤Л ╨╕╨╖╨▒╨╡╨╢╨░╤В╤М ╨┐╨╡╤А╨╡╨┤╨░╤З╨╕
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М ╨║╨╛╨╗-╨▓╨╛ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡ arrJ, ArrQ, ArrKv1
+	// ╨Т╨Э╨г╨в╨а╨Ш ╨и╨Р╨У╨Р
+	// ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
+	// ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╝╨░╨║╤Б ╨╕ ╨╜╨╛╨╝╨╡╤А ╤Б╨╛╤Б╤В
 
-	// mpi разбросать по процессам по номерам состояний
+	// mpi ╤А╨░╨╖╨▒╤А╨╛╤Б╨░╤В╤М ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝ ╨┐╨╛ ╨╜╨╛╨╝╨╡╤А╨░╨╝ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
 {	for ai:= aibase+1 to Ns-1 do begin
 		CalcForState();
 	end;
@@ -581,17 +652,17 @@ var
 	arrJSizes : array of longint;
 	s: string;
 begin
-	// ВНЕ ШАГА
-	// посчитать кол-во сост для каждого процесса. м.б. внутри процесса чтобы избежать передачи
-	// разослать кол-во состояний
-	// разослать данные arrJ, ArrQ, ArrKv1
+	// ╨Т╨Э╨Х ╨и╨Р╨У╨Р
+	// ╨┐╨╛╤Б╤З╨╕╤В╨░╤В╤М ╨║╨╛╨╗-╨▓╨╛ ╤Б╨╛╤Б╤В ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░. ╨╝.╨▒. ╨▓╨╜╤Г╤В╤А╨╕ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░ ╤З╤В╨╛╨▒╤Л ╨╕╨╖╨▒╨╡╨╢╨░╤В╤М ╨┐╨╡╤А╨╡╨┤╨░╤З╨╕
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М ╨║╨╛╨╗-╨▓╨╛ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
+	// ╤А╨░╨╖╨╛╤Б╨╗╨░╤В╤М ╨┤╨░╨╜╨╜╤Л╨╡ arrJ, ArrQ, ArrKv1
 
 	MPI_BCAST(@cW, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	SetLength(procArrKv1, Ns+1);
 	bcast_arrInt(ArrKv1, procArrKv1);
 
-	// передать arrJ (двумерный)
+	// ╨┐╨╡╤А╨╡╨┤╨░╤В╤М arrJ (╨┤╨▓╤Г╨╝╨╡╤А╨╜╤Л╨╣)
 	SetLength(procArrJ, Ns+1);
 {	if myid = 0 then begin
 			s:= '';
@@ -619,7 +690,7 @@ begin
 			writeln(s);
 	end;
 }
-	// передать arrR (двумерный)
+	// ╨┐╨╡╤А╨╡╨┤╨░╤В╤М arrR (╨┤╨▓╤Г╨╝╨╡╤А╨╜╤Л╨╣)
 	SetLength(procArrR, Ns+1);
 {			for ai:= 1 to length(ArrR)-1 do begin //
 				for aj:= 1 to length(ArrR[ai])-1 do begin 
@@ -638,14 +709,14 @@ begin
 }
 //	SetLength(ArrQ, Ns+1);
 
-	SetLength(ArrVCurrStep, Ns+1); // пропускаем 0й
+	SetLength(ArrVCurrStep, Ns+1); // ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝ 0╨╣
 
 	SetLength(procArrVcurrStep, Ns+1);
 	SetLength(procArrVprevStep, Ns+1);
 	SetLength(procArrDcurrStep, Ns+1);
 //	SetLength(procArrDcurrStepTemp, Ns+1);//procNc*M + 1
 
-	// расчет кол-ва порций ресурса для процесса
+	// ╤А╨░╤Б╤З╨╡╤В ╨║╨╛╨╗-╨▓╨░ ╨┐╨╛╤А╤Ж╨╕╨╣ ╤А╨╡╤Б╤Г╤А╤Б╨░ ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░
 	setLength(procNcArr, numprocs);
 	setLength(procNcArrTemp, numprocs);
     if myid = 0 then begin
@@ -653,7 +724,7 @@ begin
 
 		procNc:= (Nc+1) div numprocs;
 
-		if ((Nc+1) mod numprocs) > 0 then begin // заявки нацело НЕ делятся по процессам
+		if ((Nc+1) mod numprocs) > 0 then begin // ╨╖╨░╤П╨▓╨║╨╕ ╨╜╨░╤Ж╨╡╨╗╨╛ ╨Э╨Х ╨┤╨╡╨╗╤П╤В╤Б╤П ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 			inc(procNc);
 		    restNc:= Nc+1;
 			for ai:=0 to numprocs-1 do begin
@@ -668,7 +739,7 @@ begin
 				procNcArrTemp[ai]:= procNcArr[ai]*M;
 			end;
 		end
-		else begin // заявки нацело делятся по процессам 
+		else begin // ╨╖╨░╤П╨▓╨║╨╕ ╨╜╨░╤Ж╨╡╨╗╨╛ ╨┤╨╡╨╗╤П╤В╤Б╤П ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝ 
 			for ai:=0 to numprocs-1 do begin
 				procNcArr[ai]:=procNc;
 				procNcArrTemp[ai]:= procNcArr[ai]*M;
@@ -677,17 +748,17 @@ begin
 	end;
 	MPI_BCAST(@procNcArr[0], numprocs, MPI_INT, 0, MPI_COMM_WORLD);
 
-	// рассылка кол-ва заявок по процессам
+	// ╤А╨░╤Б╤Б╤Л╨╗╨║╨░ ╨║╨╛╨╗-╨▓╨░ ╨╖╨░╤П╨▓╨╛╨║ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	if myid = 0 then
 		for ai:=0 to numprocs-1 do
 			MPI_SEND(@procNcArr[ai], 1, MPI_INT, ai, teg, MPI_COMM_WORLD);
 
-	// получение кол-ва заявок по процессам
+	// ╨┐╨╛╨╗╤Г╤З╨╡╨╜╨╕╨╡ ╨║╨╛╨╗-╨▓╨░ ╨╖╨░╤П╨▓╨╛╨║ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	MPI_RECV(@procNc, 1, MPI_INT, 0, teg, MPI_COMM_WORLD, status);
 
 	SetLength(procArrDcurrStepTemp, procNc*M + 1);//
 
-	// рассылка начального номера заявки по процессам
+	// ╤А╨░╤Б╤Б╤Л╨╗╨║╨░ ╨╜╨░╤З╨░╨╗╤М╨╜╨╛╨│╨╛ ╨╜╨╛╨╝╨╡╤А╨░ ╨╖╨░╤П╨▓╨║╨╕ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	if myid = 0 then begin
 		procDownNc:= 1;
 		for ai:= 0 to numprocs-1 do begin
@@ -697,15 +768,15 @@ begin
 		procDownNc:= 1;
 	end;
 
-	// получение начального номера заявки по процессам
+	// ╨┐╨╛╨╗╤Г╤З╨╡╨╜╨╕╨╡ ╨╜╨░╤З╨░╨╗╤М╨╜╨╛╨│╨╛ ╨╜╨╛╨╝╨╡╤А╨░ ╨╖╨░╤П╨▓╨║╨╕ ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝
 	MPI_RECV(@procDownNc, 1, MPI_INT, 0, teg, MPI_COMM_WORLD, status);
 
 	procUpNc:= procDownNc + procNc - 1;
 //	writeln(myid, '| procDownNc = ', procDownNc, ' procUpNc = ', procUpNc, ' procNc = ', procNc);
 
-	// подготовка структур данных для сборки в цикле
+	// ╨┐╨╛╨┤╨│╨╛╤В╨╛╨▓╨║╨░ ╤Б╤В╤А╤Г╨║╤В╤Г╤А ╨┤╨░╨╜╨╜╤Л╤Е ╨┤╨╗╤П ╤Б╨▒╨╛╤А╨║╨╕ ╨▓ ╤Ж╨╕╨║╨╗╨╡
 //	if myid = 0 then begin
-		// смещения для последующей сборки
+		// ╤Б╨╝╨╡╤Й╨╡╨╜╨╕╤П ╨┤╨╗╤П ╨┐╨╛╤Б╨╗╨╡╨┤╤Г╤О╤Й╨╡╨╣ ╤Б╨▒╨╛╤А╨║╨╕
 		setLength(procSubArrVDispls, numprocs);
 		setLength(procSubArrDDispls, numprocs);
 		setLength(procSubArrDDisplsTemp, numprocs);
@@ -724,7 +795,7 @@ begin
 		end;
 //	end;
 
-	// буфер для отправки
+	// ╨▒╤Г╤Д╨╡╤А ╨┤╨╗╤П ╨╛╤В╨┐╤А╨░╨▓╨║╨╕
 	sendSubArrVBufSize:= procNc*sizeOfDouble;
 	sendSubArrDBufSize:= M*procNc*sizeOfLongint;
 	getMem(sendSubArrVBuf, sendSubArrVBufSize);
@@ -762,7 +833,7 @@ begin
 	setLength(procSubArrDDispls, 0);
 	setLength(procSubArrDDisplsTemp, 0);
 
-	// чистим память
+	// ╤З╨╕╤Б╤В╨╕╨╝ ╨┐╨░╨╝╤П╤В╤М
 	freeMem(sendSubArrVBuf, sendSubArrVBufSize);
 	freeMem(sendSubArrDBuf, sendSubArrDBufSize);
 
@@ -779,13 +850,13 @@ var
 	var
 		ak: longint;
 	begin
-    // поиск max по ak
-		// mpi найти локальный максимум по каждому процессу - начало
+    // ╨┐╨╛╨╕╤Б╨║ max ╨┐╨╛ ak
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨╜╨░╤З╨░╨╗╨╛
 		axi2_max:= -1000;//low(double);
 		ak_max:= 1;
 		for ak:= 1 to procArrKv1[ai] do begin
 			ai_j:= procArrJ[ai, ak];
-			if ai_j=-1000 then break; // если законились rijk <> low(longint)
+			if ai_j=-1000 then break; // ╨╡╤Б╨╗╨╕ ╨╖╨░╨║╨╛╨╜╨╕╨╗╨╕╤Б╤М rijk <> low(longint)
 			axi2:= ag_n1 + procArrR[ai, ak]
 				+ (1/cw)*procArrVcurrStep[ai_j]
 				- ((1/cw)-1)*procArrVprevStep[ai_j];
@@ -794,26 +865,26 @@ var
 				ak_max:=ak;
 			end;
     	end;
-		// mpi найти локальный максимум по каждому процессу - конец
-		// mpi вернуть локальный макс. Определить глобальный макс
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨║╨╛╨╜╨╡╤Ж
+		// mpi ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б. ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
 		axi:= axi2_max;
 		avi_n1:= (1-cW)*procArrVprevStep[ai] + cW*axi - cw*ag_n1;
 		procArrVcurrStep[ai]:= avi_n1;
 		procArrDcurrStep[ai]:= ak_max;
-		// вернуть надо только измененные данные по ai из procArrVcurrStep, procArrDcurrStep
+		// ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╜╨░╨┤╨╛ ╤В╨╛╨╗╤М╨║╨╛ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨┐╨╛ ai ╨╕╨╖ procArrVcurrStep, procArrDcurrStep
 	end;
 
 	function CalcForState(): boolean;
 	var
 		ak: longint;
 	begin
-    // поиск max по ak
-		// mpi найти локальный максимум по каждому процессу - начало
+    // ╨┐╨╛╨╕╤Б╨║ max ╨┐╨╛ ak
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨╜╨░╤З╨░╨╗╨╛
 		axi2_max:= -1000;//low(double);
 		ak_max:= 1;
 		for ak:= 1 to ArrKv1[ai] do begin
 			ai_j:= ArrJ[ai, ak];
-			if ai_j=-1000 then break; // если законились rijk <> low(longint)
+			if ai_j=-1000 then break; // ╨╡╤Б╨╗╨╕ ╨╖╨░╨║╨╛╨╜╨╕╨╗╨╕╤Б╤М rijk <> low(longint)
 			axi2:= ag_n1 + ArrR[ai, ak]
 				+ (1/cw)*ArrVcurrStep[ai_j]
 				- ((1/cw)-1)*ArrVprevStep[ai_j];
@@ -822,8 +893,8 @@ var
 				ak_max:=ak;
 			end;
     	end;
-		// mpi найти локальный максимум по каждому процессу - конец
-		// mpi вернуть локальный макс. Определить глобальный макс
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨║╨╛╨╜╨╡╤Ж
+		// mpi ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б. ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
 		axi:= axi2_max;
 		avi_n1:= (1-cW)*ArrVprevStep[ai] + cW*axi - cw*ag_n1;
 		ArrVcurrStep[ai]:= avi_n1;
@@ -833,19 +904,19 @@ var
 	acur_buf_int: ^longint;
 	acur_buf_dbl: ^double;
 begin
-// Цикл по шагам
+// ╨ж╨╕╨║╨╗ ╨┐╨╛ ╤И╨░╨│╨░╨╝
 	aibase:=1;
     startTemp1:= MPI_Wtime; 
 
 	if myid = 0 then begin
 		copyArrCurrToPrev();
 
-		currStep:= currStep+1; //тек шаг = n+1
-		// вес базового сост для любого шага 0
+		currStep:= currStep+1; //╤В╨╡╨║ ╤И╨░╨│ = n+1
+		// ╨▓╨╡╤Б ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛ ╤Б╨╛╤Б╤В ╨┤╨╗╤П ╨╗╤О╨▒╨╛╨│╨╛ ╤И╨░╨│╨░ 0
 //		aibase:=1;
-		ArrVcurrStep[aibase]:=0; // веса. индексы: сост
-		ArrDcurrStep[aibase]:=1; // оптим.упр.индексы: упр
-		// в баз сост только одно управление и только 1 переход с вероятн 1
+		ArrVcurrStep[aibase]:=0; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В
+		ArrDcurrStep[aibase]:=1; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+		// ╨▓ ╨▒╨░╨╖ ╤Б╨╛╤Б╤В ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╨╕ ╤В╨╛╨╗╤М╨║╨╛ 1 ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╤Б ╨▓╨╡╤А╨╛╤П╤В╨╜ 1
 		ak:=1;
 		ag_n1:= get_qik(aibase, ak) + arrVprevStep[get_j(aibase, ak)];
 		arrG[currStep]:=ag_n1;
@@ -866,11 +937,11 @@ begin
 	MPI_BCAST(@ag_n1, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 //	writeln(myid, '| ag_n1 = ', ag_n1:6:3);
 
-	// ВНУТРИ ШАГА
-	// найти локальный макс
-	// вернуть макс и номер сост
+	// ╨Т╨Э╨г╨в╨а╨Ш ╨и╨Р╨У╨Р
+	// ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
+	// ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╝╨░╨║╤Б ╨╕ ╨╜╨╛╨╝╨╡╤А ╤Б╨╛╤Б╤В
 
-	// mpi разбросать по процессам по номерам состояний
+	// mpi ╤А╨░╨╖╨▒╤А╨╛╤Б╨░╤В╤М ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝ ╨┐╨╛ ╨╜╨╛╨╝╨╡╤А╨░╨╝ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
 {	for ai:= aibase+1 to Ns-1 do begin
 		CalcForState();
 	end;
@@ -889,7 +960,7 @@ begin
 			ai:= aibase + (am-1)*(Nc+1) + an;
 			procCalcForState();
 //			writeln(myid, '| ai = ', ai);
-			// упаковать в буфер обновленные данные procArrVcurrStep
+			// ╤Г╨┐╨░╨║╨╛╨▓╨░╤В╤М ╨▓ ╨▒╤Г╤Д╨╡╤А ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ procArrVcurrStep
 			acur_buf_dbl:= sendSubArrVBuf + (an-procDownNc)*sizeOfDouble;
 			acur_buf_dbl^:= procArrVcurrStep[ai];
 //			writeln(format('procArrVcurrStep[%d] = %f', [ai, procArrVcurrStep[ai]]));
@@ -899,11 +970,11 @@ begin
 	endTemp1:= MPI_Wtime;
 	writeln(myid, '|       CalcData   ', endTemp1 - startTemp1: 9:6);
     startTemp1:= endTemp1;
-		// отправить обновленные данные массива procArrVcurrStep
+		// ╨╛╤В╨┐╤А╨░╨▓╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨╝╨░╤Б╤Б╨╕╨▓╨░ procArrVcurrStep
 		MPI_GATHERV(sendSubArrVBuf, procNc, MPI_Double, 
 					recvSubArrVBuf, procNcArr[0], procSubArrVDispls[0], MPI_Double, 0, MPI_COMM_WORLD);
 
-		// оптимизация отправлять значения в procArrDcurrStep в конце шага, а не для каждого am - доп кодирование
+		// ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╤П ╨╛╤В╨┐╤А╨░╨▓╨╗╤П╤В╤М ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ╨▓ procArrDcurrStep ╨▓ ╨║╨╛╨╜╤Ж╨╡ ╤И╨░╨│╨░, ╨░ ╨╜╨╡ ╨┤╨╗╤П ╨║╨░╨╢╨┤╨╛╨│╨╛ am - ╨┤╨╛╨┐ ╨║╨╛╨┤╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡
 		MPI_GATHERV(sendSubArrDBuf, procNc, MPI_INT,
 					recvSubArrDBuf, procNcArr[0], procSubArrDDispls[0], MPI_INT, 0, MPI_COMM_WORLD);
 
@@ -911,7 +982,7 @@ begin
 	writeln(myid, '|       SendData   ', endTemp1 - startTemp1: 9:6);
     startTemp1:= endTemp1;
 		if myid = 0 then begin
-			// распковать
+			// ╤А╨░╤Б╨┐╨║╨╛╨▓╨░╤В╤М
 			for an:= 1 to Nc+1 do begin
 				ai:= aibase + (am-1)*(Nc+1) + an;
 				acur_buf_dbl:= recvSubArrVBuf + (an-1)*sizeOfDouble;
@@ -925,8 +996,8 @@ begin
 	writeln(myid, '|       UnpackData ', endTemp1 - startTemp1: 9:6);
     startTemp1:= endTemp1;
 
-		// bcast всем новые значения ArrVcurrStep для текущего шага
-		// оптимизация. отправлять не все значения т.е. Ns, а только измененные на этом шаге т.е Nc+1  - доп кодирование
+		// bcast ╨▓╤Б╨╡╨╝ ╨╜╨╛╨▓╤Л╨╡ ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ArrVcurrStep ╨┤╨╗╤П ╤В╨╡╨║╤Г╤Й╨╡╨│╨╛ ╤И╨░╨│╨░
+		// ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╤П. ╨╛╤В╨┐╤А╨░╨▓╨╗╤П╤В╤М ╨╜╨╡ ╨▓╤Б╨╡ ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ╤В.╨╡. Ns, ╨░ ╤В╨╛╨╗╤М╨║╨╛ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╜╤Л╨╡ ╨╜╨░ ╤Н╤В╨╛╨╝ ╤И╨░╨│╨╡ ╤В.╨╡ Nc+1  - ╨┤╨╛╨┐ ╨║╨╛╨┤╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡
 //		bcast_arrDbl(ArrVcurrStep, procArrVcurrStep);
 		if myid=0 then begin
 			for an:=0 to length(ArrVcurrStep)-1 do begin
@@ -947,7 +1018,7 @@ begin
 	writeln(myid, '|   endMainCycle ', endTemp1 - startTemp1: 9:6);
     startTemp1:= endTemp1;
 
-	// отправить обновленные данные массива procArrDcurrStep
+	// ╨╛╤В╨┐╤А╨░╨▓╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨╝╨░╤Б╤Б╨╕╨▓╨░ procArrDcurrStep
 
 	if myid = 0 then begin
 		ai:=Ns;
@@ -969,13 +1040,13 @@ var
 	var
 		ak: longint;
 	begin
-    // поиск max по ak
-		// mpi найти локальный максимум по каждому процессу - начало
+    // ╨┐╨╛╨╕╤Б╨║ max ╨┐╨╛ ak
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨╜╨░╤З╨░╨╗╨╛
 		axi2_max:= -1000;//low(double);
 		ak_max:= 1;
 		for ak:= 1 to procArrKv1[ai] do begin
 			ai_j:= procArrJ[ai, ak];
-			if ai_j=-1000 then break; // если законились rijk <> low(longint)
+			if ai_j=-1000 then break; // ╨╡╤Б╨╗╨╕ ╨╖╨░╨║╨╛╨╜╨╕╨╗╨╕╤Б╤М rijk <> low(longint)
 			axi2:= ag_n1 + procArrR[ai, ak]
 				+ (1/cw)*procArrVcurrStep[ai_j]
 				- ((1/cw)-1)*procArrVprevStep[ai_j];
@@ -984,26 +1055,26 @@ var
 				ak_max:=ak;
 			end;
     	end;
-		// mpi найти локальный максимум по каждому процессу - конец
-		// mpi вернуть локальный макс. Определить глобальный макс
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨║╨╛╨╜╨╡╤Ж
+		// mpi ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б. ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
 		axi:= axi2_max;
 		avi_n1:= (1-cW)*procArrVprevStep[ai] + cW*axi - cw*ag_n1;
 		procArrVcurrStep[ai]:= avi_n1;
 		procArrDcurrStep[ai]:= ak_max;
-		// вернуть надо только измененные данные по ai из procArrVcurrStep, procArrDcurrStep
+		// ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╜╨░╨┤╨╛ ╤В╨╛╨╗╤М╨║╨╛ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨┐╨╛ ai ╨╕╨╖ procArrVcurrStep, procArrDcurrStep
 	end;
 
 	function CalcForState(): boolean;
 	var
 		ak: longint;
 	begin
-    // поиск max по ak
-		// mpi найти локальный максимум по каждому процессу - начало
+    // ╨┐╨╛╨╕╤Б╨║ max ╨┐╨╛ ak
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨╜╨░╤З╨░╨╗╨╛
 		axi2_max:= -1000;//low(double);
 		ak_max:= 1;
 		for ak:= 1 to ArrKv1[ai] do begin
 			ai_j:= ArrJ[ai, ak];
-			if ai_j=-1000 then break; // если законились rijk <> low(longint)
+			if ai_j=-1000 then break; // ╨╡╤Б╨╗╨╕ ╨╖╨░╨║╨╛╨╜╨╕╨╗╨╕╤Б╤М rijk <> low(longint)
 			axi2:= ag_n1 + ArrR[ai, ak]
 				+ (1/cw)*ArrVcurrStep[ai_j]
 				- ((1/cw)-1)*ArrVprevStep[ai_j];
@@ -1012,8 +1083,8 @@ var
 				ak_max:=ak;
 			end;
     	end;
-		// mpi найти локальный максимум по каждому процессу - конец
-		// mpi вернуть локальный макс. Определить глобальный макс
+		// mpi ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б╨╕╨╝╤Г╨╝ ╨┐╨╛ ╨║╨░╨╢╨┤╨╛╨╝╤Г ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╤Г - ╨║╨╛╨╜╨╡╤Ж
+		// mpi ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б. ╨Ю╨┐╤А╨╡╨┤╨╡╨╗╨╕╤В╤М ╨│╨╗╨╛╨▒╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
 		axi:= axi2_max;
 		avi_n1:= (1-cW)*ArrVprevStep[ai] + cW*axi - cw*ag_n1;
 		ArrVcurrStep[ai]:= avi_n1;
@@ -1023,8 +1094,8 @@ var
 	acur_buf_int: ^longint;
 	acur_buf_dbl: ^double;
 begin
-// Цикл по шагам
-	writeln(myid, '|   BeforeStep ');
+// ╨ж╨╕╨║╨╗ ╨┐╨╛ ╤И╨░╨│╨░╨╝
+//	writeln(myid, '|   BeforeStep ');
 	aibase:=1;
 //    startTemp1:= MPI_Wtime; 
 
@@ -1032,11 +1103,11 @@ begin
 	if myid = 0 then begin
 		copyArrCurrToPrev();
 
-		currStep:= currStep+1; //тек шаг = n+1
-		// вес базового сост для любого шага 0
-		ArrVcurrStep[aibase]:=0; // веса. индексы: сост aibase:=1;
-		ArrDcurrStep[aibase]:=1; // оптим.упр.индексы: упр
-		// в баз сост только одно управление и только 1 переход с вероятн 1
+		currStep:= currStep+1; //╤В╨╡╨║ ╤И╨░╨│ = n+1
+		// ╨▓╨╡╤Б ╨▒╨░╨╖╨╛╨▓╨╛╨│╨╛ ╤Б╨╛╤Б╤В ╨┤╨╗╤П ╨╗╤О╨▒╨╛╨│╨╛ ╤И╨░╨│╨░ 0
+		ArrVcurrStep[aibase]:=0; // ╨▓╨╡╤Б╨░. ╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Б╨╛╤Б╤В aibase:=1;
+		ArrDcurrStep[aibase]:=1; // ╨╛╨┐╤В╨╕╨╝.╤Г╨┐╤А.╨╕╨╜╨┤╨╡╨║╤Б╤Л: ╤Г╨┐╤А
+		// ╨▓ ╨▒╨░╨╖ ╤Б╨╛╤Б╤В ╤В╨╛╨╗╤М╨║╨╛ ╨╛╨┤╨╜╨╛ ╤Г╨┐╤А╨░╨▓╨╗╨╡╨╜╨╕╨╡ ╨╕ ╤В╨╛╨╗╤М╨║╨╛ 1 ╨┐╨╡╤А╨╡╤Е╨╛╨┤ ╤Б ╨▓╨╡╤А╨╛╤П╤В╨╜ 1
 		ak:=1;
 		ag_n1:= get_qik(aibase, ak) + arrVprevStep[get_j(aibase, ak)];
 		arrG[currStep]:=ag_n1;
@@ -1059,11 +1130,11 @@ begin
 	MPI_BCAST(@ag_n1, 1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 //	writeln(myid, '| ag_n1 = ', ag_n1:6:3);
 
-	// ВНУТРИ ШАГА
-	// найти локальный макс
-	// вернуть макс и номер сост
+	// ╨Т╨Э╨г╨в╨а╨Ш ╨и╨Р╨У╨Р
+	// ╨╜╨░╨╣╤В╨╕ ╨╗╨╛╨║╨░╨╗╤М╨╜╤Л╨╣ ╨╝╨░╨║╤Б
+	// ╨▓╨╡╤А╨╜╤Г╤В╤М ╨╝╨░╨║╤Б ╨╕ ╨╜╨╛╨╝╨╡╤А ╤Б╨╛╤Б╤В
 
-	// mpi разбросать по процессам по номерам состояний
+	// mpi ╤А╨░╨╖╨▒╤А╨╛╤Б╨░╤В╤М ╨┐╨╛ ╨┐╤А╨╛╤Ж╨╡╤Б╤Б╨░╨╝ ╨┐╨╛ ╨╜╨╛╨╝╨╡╤А╨░╨╝ ╤Б╨╛╤Б╤В╨╛╤П╨╜╨╕╨╣
 {	for ai:= aibase+1 to Ns-1 do begin
 		CalcForState();
 	end;
@@ -1083,7 +1154,7 @@ begin
 			ai:= aibase + (am-1)*(Nc+1) + an;
 			procCalcForState();
 //			writeln(myid, '| ai = ', ai);
-			// упаковать в буфер обновленные данные procArrVcurrStep
+			// ╤Г╨┐╨░╨║╨╛╨▓╨░╤В╤М ╨▓ ╨▒╤Г╤Д╨╡╤А ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ procArrVcurrStep
 			acur_buf_dbl:= sendSubArrVBuf + (an-procDownNc)*sizeOfDouble;
 			acur_buf_dbl^:= procArrVcurrStep[ai];
 //			writeln(format('procArrVcurrStep[%d] = %f', [ai, procArrVcurrStep[ai]]));
@@ -1093,7 +1164,7 @@ begin
 //	endTemp1:= MPI_Wtime;
 //	writeln(myid, '|       CalcData   ', endTemp1 - startTemp1: 9:6);
 //    startTemp1:= endTemp1;
-		// отправить обновленные данные массива procArrVcurrStep
+		// ╨╛╤В╨┐╤А╨░╨▓╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨╝╨░╤Б╤Б╨╕╨▓╨░ procArrVcurrStep
 //		MPI_GATHERV(sendSubArrVBuf, procNc, MPI_Double, 
 //					recvSubArrVBuf, procNcArr[0], procSubArrVDispls[0], MPI_Double, 0, MPI_COMM_WORLD);
 		ai:= aibase + (am-1)*(Nc+1);
@@ -1109,7 +1180,7 @@ begin
 //	writeln(myid, '|       SendData   ', endTemp1 - startTemp1: 9:6);
 //    startTemp1:= endTemp1;
 {		if myid = 0 then begin
-			// распковать
+			// ╤А╨░╤Б╨┐╨║╨╛╨▓╨░╤В╤М
 			for an:= 1 to Nc+1 do begin
 				ai:= aibase + (am-1)*(Nc+1) + an;
 				acur_buf_dbl:= recvSubArrVBuf + (an-1)*sizeOfDouble;
@@ -1121,8 +1192,8 @@ begin
 		end;
 }
 
-		// bcast всем новые значения ArrVcurrStep для текущего шага
-		// оптимизация. отправлять не все значения т.е. Ns, а только измененные на этом шаге т.е Nc+1  - доп кодирование
+		// bcast ╨▓╤Б╨╡╨╝ ╨╜╨╛╨▓╤Л╨╡ ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ArrVcurrStep ╨┤╨╗╤П ╤В╨╡╨║╤Г╤Й╨╡╨│╨╛ ╤И╨░╨│╨░
+		// ╨╛╨┐╤В╨╕╨╝╨╕╨╖╨░╤Ж╨╕╤П. ╨╛╤В╨┐╤А╨░╨▓╨╗╤П╤В╤М ╨╜╨╡ ╨▓╤Б╨╡ ╨╖╨╜╨░╤З╨╡╨╜╨╕╤П ╤В.╨╡. Ns, ╨░ ╤В╨╛╨╗╤М╨║╨╛ ╨╕╨╖╨╝╨╡╨╜╨╡╨╜╨╜╤Л╨╡ ╨╜╨░ ╤Н╤В╨╛╨╝ ╤И╨░╨│╨╡ ╤В.╨╡ Nc+1  - ╨┤╨╛╨┐ ╨║╨╛╨┤╨╕╤А╨╛╨▓╨░╨╜╨╕╨╡
 //		bcast_arrDbl(ArrVcurrStep, procArrVcurrStep);
 //		if myid=0 then begin
 //			for an:=0 to length(ArrVcurrStep)-1 do begin
@@ -1146,7 +1217,7 @@ begin
 
 {
 	for am:= 1 to M do begin
-		// перепаковать и сделать 1у передачу
+		// ╨┐╨╡╤А╨╡╨┐╨░╨║╨╛╨▓╨░╤В╤М ╨╕ ╤Б╨┤╨╡╨╗╨░╤В╤М 1╤Г ╨┐╨╡╤А╨╡╨┤╨░╤З╤Г
 		ai:= aibase + (am-1)*(Nc+1);
 		MPI_GATHERV(@procArrDcurrStep[ai+procDownNc], procNc, MPI_INT,
 					@ArrDcurrStep[ai+1], procNcArr[0], procSubArrDDispls[0], MPI_INT, 0, MPI_COMM_WORLD);
@@ -1157,19 +1228,19 @@ begin
 //	str:= #13#10;
 //	writeln(' procDownNc ', procDownNc, ' procUpNc ', procUpNc);
 	for am:= 1 to M do begin
-		// перепаковать и сделать 1у передачу
+		// ╨┐╨╡╤А╨╡╨┐╨░╨║╨╛╨▓╨░╤В╤М ╨╕ ╤Б╨┤╨╡╨╗╨░╤В╤М 1╤Г ╨┐╨╡╤А╨╡╨┤╨░╤З╤Г
 		for an:=procDownNc to procUpNc do begin
 			ai:= aibase + (am-1)*(Nc+1) + an;
 			procArrDcurrStepTemp[ap]:= procArrDcurrStep[ai];
-			ap:=ap+1;//от 1 до M*procNc
-			// для проца идут подряд
+			ap:=ap+1;//╨╛╤В 1 ╨┤╨╛ M*procNc
+			// ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨░ ╨╕╨┤╤Г╤В ╨┐╨╛╨┤╤А╤П╨┤
 //			str:= str + format('d[%d]=%d ', [ai, procArrDcurrStep[ai]]);
 		end;
 //		str:= str + #13#10;
 	end;
 //	writeln(myid, ' | 1', str);
 	
-	// 0й procArrDcurrStepTemp пропускаем
+	// 0╨╣ procArrDcurrStepTemp ╨┐╤А╨╛╨┐╤Г╤Б╨║╨░╨╡╨╝
 //	writeln('length(procArrDcurrStepTemp) = ', length(procArrDcurrStepTemp), ' procNc*M = ', procNc*M);
 //	writeln('length(ArrDcurrStepTemp) = ', length(ArrDcurrStepTemp), ' procNcArrTemp[0] = ', procNcArrTemp[0]);
 	MPI_GATHERV(@procArrDcurrStepTemp[0], procNc*M, MPI_INT,
@@ -1186,12 +1257,12 @@ begin
 			for am:= 1 to M do begin
 //				for an:=procDownNc to procUpNc do begin
 				for an:=procDownNc to procUpNc do begin
-			// распаковать
+			// ╤А╨░╤Б╨┐╨░╨║╨╛╨▓╨░╤В╤М
 					ai:= aibase + (am-1)*(Nc+1) + an;
-					ap:= ap + 1;//от 1 до M*procNc
+					ap:= ap + 1;//╨╛╤В 1 ╨┤╨╛ M*procNc
 //					writeln(' ap=', ap , ' ai=', ai);
 					ArrDcurrStep[ai]:= ArrDcurrStepTemp[ap];
-					// для проца идут подряд
+					// ╨┤╨╗╤П ╨┐╤А╨╛╤Ж╨░ ╨╕╨┤╤Г╤В ╨┐╨╛╨┤╤А╤П╨┤
 //					str:= str + format('d[%d]=%d ', [ai, ArrDcurrStep[ai] ]);
 				end;//an
 //				str:= str + #13#10;
@@ -1207,7 +1278,7 @@ begin
 //	writeln(myid, '|       sendD ', endTemp1 - startTemp1: 9:6);
 //    startTemp1:= endTemp1;
 
-	// отправить обновленные данные массива procArrDcurrStep
+	// ╨╛╤В╨┐╤А╨░╨▓╨╕╤В╤М ╨╛╨▒╨╜╨╛╨▓╨╗╨╡╨╜╨╜╤Л╨╡ ╨┤╨░╨╜╨╜╤Л╨╡ ╨╝╨░╤Б╤Б╨╕╨▓╨░ procArrDcurrStep
 
 	if myid = 0 then begin
 		ai:=Ns;
@@ -1250,7 +1321,7 @@ begin
 //   		vIsDone := CalcOsnSchemaStepMPI();
    		vIsDone := CalcOsnSchemaStepMPIv2();
 	endTemp:= MPI_Wtime;
-	writeln(myid, '| CalcOsnSchemaStepMPI cnt=', cnt, endTemp - startTemp: 9:6);
+//	writeln(myid, '| CalcOsnSchemaStepMPI cnt=', cnt, endTemp - startTemp: 9:6);
 	startTemp:= endTemp;
 		MPI_BCAST(@vIsDone, 1, MPI_INT, 0, MPI_COMM_WORLD);
 

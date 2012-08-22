@@ -103,6 +103,9 @@ begin
 		SetLength(rqi  , M+1);//значения показателей
 		
 		bOk:= InitOrders();
+
+		addStateTrans:= getBoolNodeValue(inDoc, 'addStateTrans', true);
+		addOsnSteps:= getBoolNodeValue(inDoc, 'addOsnSteps', true);
 {	
 	for ai:=1 to M do begin
 		rlmni[ai]:=0; //мин

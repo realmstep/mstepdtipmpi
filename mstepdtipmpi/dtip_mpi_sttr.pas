@@ -123,15 +123,22 @@ end;
 
 function setAllJbyRNS(): boolean;
 var
-	aj: longint;
+	ai, aj: longint;
 begin
 // использует XML
+{
 	stateTransNode:= stateTransRootNode.firstChild;
 	for i:=1 to StateTransCnt do begin
 		//найти ноду и изменить j
 		aj:= getJbyRNS( getIntAttrValue(stateTransNode, 'RNSj', -1) );
 		addIntAttribute(stateTransNode, 'j', aj);
 		stateTransNode:= stateTransNode.NextSibling;
+	end;
+}       
+	for ai:=1 to StateTransCnt do begin
+		//найти ноду и изменить j
+		aj:= getJbyRNS(StateTransArr[ai].rRNSj);
+		StateTransArr[ai].rj:=aj;
 	end;
 end;
 
@@ -776,6 +783,8 @@ begin
 
 		AddAllStateTransForInitialState();
 
+		setAllJbyRNS();
+
 		for ai:= 1 to StateTransCnt do begin
 			with StateTransArr[ai] do begin
 				addStateTransNode(
@@ -786,8 +795,8 @@ begin
 			end;
 		end;
 
-		// Перенести в Main
-		setLength(StateTransArr, 0);
+		// Перенесен в Main
+//		setLength(StateTransArr, 0);
 //		writeln(' after AddAllStateTransForInitialState ');
 	end;
 end;

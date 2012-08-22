@@ -49,7 +49,6 @@ begin
 	    endStateTrans:= MPI_Wtime;
 		totalStateTrans:= endStateTrans-startStateTrans;
 
-		setAllJbyRNS();
 		// рассчитать непосредственно ожидаемый доход
 		Calc_qijk();
 	end;
@@ -68,8 +67,8 @@ begin
 	    endOsn:= MPI_Wtime;
 		totalOsn:= endOsn-startOsn;
 
-//		rTrace:=IterpretResults();
-		rTrace:=IterpretResultsAsNode();
+//		rTrace:=InterpretResults();
+		rTrace:=InterpretResultsAsNode();
 
 		FinalizeOsnShema();
 	end;
@@ -81,8 +80,10 @@ begin
 		totaltime:= endwtime-startwtime;
 
 		FinalizeData();
+		// перенесен из sttr
+		setLength(StateTransArr, 0);
 
-		writeln('time for calcStateTransModified:', totaltime:9:6);
+		writeln('TOTAL time:', totaltime:9:6);
 
 		writeln('Completed at ', numprocs, ' procs. Press Enter to continue...');
 //		readln();

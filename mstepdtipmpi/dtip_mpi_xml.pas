@@ -49,6 +49,18 @@ begin
 		getDblAttrValue:= StrToFloat(astr);
 end;
 
+function getBoolNodeValue(aDoc: TXMLDocument;aname: string; adef: boolean): boolean;
+var
+	astr: string;
+begin
+	astr:= aDoc.getElementsByTagName(aname)[0].TextContent;
+	if astr='' then
+		result:= adef
+	else
+		result:= StrToBool(astr);
+end;
+
+
 function addIntNode(var aRootNode:TDOMNode; aNodeName:string; aNodeValue:Longint):boolean;
 begin	
 	parentNode:=aDoc.CreateElement(aNodeName);
@@ -164,6 +176,7 @@ function addStateTransNode(
 	az1i, az2i, aRNSi, az1j, az2j, aRNSj, au1, aku1, av1, av2, akv1, ansgh: longint
 ):boolean;
 begin
+	if not addStateTrans then exit;
 	stateTransNode:=aDoc.CreateElement('stateTrans');
 	addIntAttribute(stateTransNode, 'i', ai);
 	addIntAttribute(stateTransNode, 'j', aj);

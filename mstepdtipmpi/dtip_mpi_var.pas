@@ -63,6 +63,9 @@ var
 	maxIterationCnt: longint;
 	minAmountPerOrder, maxAmountPerOrder: longint;
 
+	addStateTrans, addOsnSteps: boolean; // добавлять ли в XML данные о переходах, шагах основной схемы
+
+
 // mpi
     numprocs, myid : longint;
     teg : longint;
