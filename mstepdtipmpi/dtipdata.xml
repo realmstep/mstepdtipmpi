@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<dtip>
+	<maxIterationCnt>2000000000</maxIterationCnt>
+
+	<orderCnt>20</orderCnt>
+
+   	<maxAmountInPieces>250</maxAmountInPieces>
+	<minAmountPerOrder>0</minAmountPerOrder>
+	<maxAmountPerOrder>50</maxAmountPerOrder>
+	<!-- полным перебором всего ~10^9 вариантов - orderCnt=9 заявок со 10ю значениями от minAmountPerOrder=0 до maxAmountPerOrder=9 -->
+	<!-- с учетом ограничений по заявкам 2,7 перебором всего ~10^7 вариантов -->
+
+	<!-- вычитываются последовательно Всего orderCnt-->
+	<orders lcnt="2" l="1">
+		<order p="0,1"               l="2" name="1_1" />
+		<order p="0,025" mn="1" mx="1" l="2" name="1_2"/>
+		<order p="0,025"               l="2" name="1_3" />
+		<order p="0,05"               l="2" name="1_4" />
+		<order p="0,05"               l="2" name="1_5" />
+		<order p="0,05"               l="2" name="1_6" />
+		<order p="0,05" mn="1" mx="1" l="2" name="1_7"/>
+		<order p="0,05"               l="2" name="1_8" />
+		<order p="0,05"               l="2" name="1_9" />
+		<order p="0,05"               l="2" name="1_1" />
+		<order p="0,05" mn="1" mx="1" l="2" name="1_2"/>
+		<order p="0,05"               l="2" name="1_3" />
+		<order p="0,05"               l="2" name="1_4" />
+		<order p="0,05"               l="2" name="1_5" />
+		<order p="0,05"               l="2" name="1_6" />
+		<order p="0,05" mn="1" mx="1" l="2" name="1_7"/>
+		<order p="0,05"               l="2" name="1_8" />
+		<order p="0,05"               l="2" name="1_9" />
+		<order p="0,05"               l="2" name="1_9" />
+		<order p="0,05"               l="2" name="1_9" />
+	</orders>
+
+	<!-- для основной схемы -->
+	<cW>0,8</cW>
+
+
+</dtip>
