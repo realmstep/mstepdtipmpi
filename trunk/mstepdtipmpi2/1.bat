@@ -1,3 +1,2 @@
-rem _compile.bat dtip_mpi_main.pas
-_compile.bat mpi_datatype.pas 
+_compile.bat dtip_mpi_main.pas
 delay 1000
