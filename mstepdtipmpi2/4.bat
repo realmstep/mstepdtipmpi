@@ -1,1 +1,1 @@
-_run4.bat dtip_mpi_main.exe
+_run4.bat dtip_mpi_main.exe >4

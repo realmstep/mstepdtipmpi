@@ -760,10 +760,10 @@ begin
 
 	// рассылка кол-ва заявок по процессам
 	if myid = 0 then begin
-		writeln(myid, format(' send procNc=%d ', [procNcArr[0]]) );
+//		writeln(myid, format(' send procNc=%d ', [procNcArr[0]]) );
 	end;
 	MPI_SCATTER(@procNcArr[0], 1, MPI_INT, @procNc, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln(myid, format(' recv procNc=%d ', [procNc]) );
+//	writeln(myid, format(' recv procNc=%d ', [procNc]) );
 {
 	if myid = 0 then
 		for ai:=0 to numprocs-1 do
@@ -776,10 +776,10 @@ begin
 
 	// рассылка начального номера заявки по процессам
 	if myid = 0 then begin
-		writeln(myid, format(' send procDownNc=%d ', [procDownNcArr[0]]) );
+//		writeln(myid, format(' send procDownNc=%d ', [procDownNcArr[0]]) );
 	end;
 	MPI_SCATTER(@procDownNcArr[0], 1, MPI_INT, @procDownNc, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln(myid, format(' recv procDownNc=%d ', [procDownNc]) );
+//	writeln(myid, format(' recv procDownNc=%d ', [procDownNc]) );
 {	if myid = 0 then begin
 		procDownNc:= 1;
 		for ai:= 0 to numprocs-1 do begin
@@ -1337,14 +1337,14 @@ begin
     startTemp:= MPI_Wtime; 
 	InitProcOsnShema();
 	endTemp:= MPI_Wtime;
-	writeln(myid, '| InitProcOsnShema ', endTemp - startTemp: 9:6);
+//	writeln(myid, '| InitProcOsnShema ', endTemp - startTemp: 9:6);
 	startTemp:= endTemp;
 	
 	cnt:=0;
    	repeat
    		inc(cnt);
    		if cnt>1000 then begin
-   			writeln('Osn shema MPI stopped by iteration cnt');
+   			writeln('Osn shema MPI stopped by iteration cnt>1000');
    			break;
    		end;
 
@@ -1362,12 +1362,12 @@ begin
 
 	FinalizeProcOsnShema();
 	endTemp:= MPI_Wtime;
-	writeln(myid, '| FinalizeProcOsnShema ', endTemp - startTemp: 9:6);
+//	writeln(myid, '| FinalizeProcOsnShema ', endTemp - startTemp: 9:6);
 	startTemp:= endTemp;
 
 	if myid = 0 then begin
 	    endOsnMPI:= MPI_Wtime;
 		totalOsnMPI:= endOsnMPI-startOsnMPI;
-		writeln('totalOsnMPI', totalOsnMPI:9:6);
+		writeln(myid, format('| TIME totalOsnMPI=%.6f sec', [totalOsnMPI]));
 	end;
 end;

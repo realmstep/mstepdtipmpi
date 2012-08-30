@@ -1,4 +1,4 @@
-// ïğîâåğêè êîğğåêòíîñòè äàííûõ
+// ¯à®¢¥àª¨ ª®àà¥ªâ­®áâ¨ ¤ ­­ëå
 // maxAmountInPieces >= 0 and <= max(longint) or const
 // orderCnt > 0 and < max(longint) or const 
 // sum(p[ai]) = 1
@@ -67,6 +67,8 @@ var
 	at: string;
 	bOk: boolean;
 begin
+	getMem(status, SizeOf(MPI_Status));
+
 	InitializeXML();
 	
 	inFileName:= paramStr(1);

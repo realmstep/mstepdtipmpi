@@ -4,9 +4,9 @@
 
 	<orderCnt>20</orderCnt>
 
-   	<maxAmountInPieces>1000</maxAmountInPieces>
+   	<maxAmountInPieces>500</maxAmountInPieces>
 	<minAmountPerOrder>0</minAmountPerOrder>
-	<maxAmountPerOrder>200</maxAmountPerOrder>
+	<maxAmountPerOrder>100</maxAmountPerOrder>
 	<!-- полным перебором всего ~10^9 вариантов - orderCnt=9 заявок со 10ю значениями от minAmountPerOrder=0 до maxAmountPerOrder=9 -->
 	<!-- с учетом ограничений по заявкам 2,7 перебором всего ~10^7 вариантов -->
 
