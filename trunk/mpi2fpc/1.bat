@@ -1,0 +1,1 @@
+h2pas.exe -D -u mpi2 mpi2.h -o mpi2tmp.pp | more
