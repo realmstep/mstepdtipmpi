@@ -1,0 +1,1 @@
+D:\FPC\MPICH2\bin\mpiexec.exe -pwdfile lgn.txt -np 4 %1
