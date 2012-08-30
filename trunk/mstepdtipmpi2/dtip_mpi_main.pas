@@ -30,50 +30,66 @@ begin
     teg := 0;
     MPI_Comm_size(MPI_COMM_WORLD, @numprocs);
     MPI_Comm_rank(MPI_COMM_WORLD, @myid);
-	writeln(myid, ' before all');
+	writeln(myid, '| before all');
 
     if myid = 0 then begin
+		writeln(myid, '| started at ', numprocs, ' procs');
+
 		startwtime := MPI_Wtime;
-//		InitData();
-		getMem(status, SizeOf(MPI_Status));
+
+       	writeln(myid, '| before initData');
 	    ab:= initData();
     	if not ab then begin
-        	writeln('init failed');
+        	writeln(myid, '| initData failed');
 			exit;
 		end;
+       	writeln(myid, '| initData finished ok');
 
 	    startStateTrans:= MPI_Wtime;
 		totalStateTransMPI:=0;
 	end;
-	calcStateTransModified();
 
+	writeln(myid, '| before calcStateTrans');
+	calcStateTransModified();
+	writeln(myid, '| calcStateTrans finished ok');
 
     if myid = 0 then begin
 	    endStateTrans:= MPI_Wtime;
 		totalStateTrans:= endStateTrans-startStateTrans;
+		writeln(myid, format('| TIME totalStateTrans=%.6f sec', [totalStateTrans]));
 
 		// рассчитать непосредственно ожидаемый доход
+		writeln(myid, '| before Calc_qijk');
 		Calc_qijk();
+		writeln(myid, '| Calc_qijk finished ok');
 	end;
 
     if myid = 0 then begin
 	    startOsn:= MPI_Wtime;
+		writeln(myid, '| before InitOsnShema');
 		InitOsnShema();
 
 		addOsnNode(); // 0й шаг
+		writeln(myid, '| InitOsnShema finished ok');
 	end;
 	
-//	CalcOsnSchema();
+	writeln(myid, '| before CalcOsnSchema');
 	CalcOsnSchemaMPI();
+	writeln(myid, '| CalcOsnSchema finished ok');
 
     if myid = 0 then begin
 	    endOsn:= MPI_Wtime;
 		totalOsn:= endOsn-startOsn;
+		writeln(myid, format('| TIME totalOsn=%.6f sec', [totalOsn]));
 
 //		rTrace:=InterpretResults();
+		writeln(myid, '| before InterpretResults');
 		rTrace:=InterpretResultsAsNode();
+		writeln(myid, '| InterpretResults finished ok');
 
+		writeln(myid, '| before FinalizeOsnShema');
 		FinalizeOsnShema();
+		writeln(myid, '| FinalizeOsnShema finished ok');
 	end;
 
 	MPI_Barrier(MPI_COMM_WORLD);
@@ -82,15 +98,15 @@ begin
 		endwtime := MPI_Wtime;
 		totaltime:= endwtime-startwtime;
 
+		writeln(myid, '| before FinalizeData');
 		FinalizeData();
 		freeMem(status, SizeOf(MPI_Status));
 		status := Nil;
 		// перенесен из sttr
 		setLength(StateTransArr, 0);
+		writeln(myid, '| FinalizeData finished ok');
 
-		writeln('TOTAL time:', totaltime:9:6);
-
-		writeln('Completed at ', numprocs, ' procs. Press Enter to continue...');
+		writeln(myid, '| TOTAL time:', totaltime:9:6);
 //		readln();
 	end;
 	MPI_Finalize;

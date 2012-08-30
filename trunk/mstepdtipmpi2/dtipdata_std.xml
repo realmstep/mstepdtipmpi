@@ -25,8 +25,8 @@
 
 	<!-- для основной схемы -->
 	<cW>0,8</cW>
-	<addStateTrans>true</addStateTrans>
-	<addOsnSteps>true</addOsnSteps>
+	<addStateTrans>false</addStateTrans>
+	<addOsnSteps>false</addOsnSteps>
 
 
 </dtip>

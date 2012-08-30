@@ -421,16 +421,16 @@ var
 begin
 	// общие данные	
 
-	writeln('InitProcStateTrans before first bcast'); 
-	writeln(Format('MPI_INT=%d', [MPI_INT])); 
+//	writeln('InitProcStateTrans before first bcast'); 
+//	writeln(Format('MPI_INT=%d', [MPI_INT])); 
     
 	MPI_BCAST(@M, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln(myid, format(' M=%d', [M]) );
-	writeln('InitProcStateTrans after first bcast'); 
+//	writeln(myid, format(' M=%d', [M]) );
+//	writeln('InitProcStateTrans after first bcast'); 
 
 	MPI_BCAST(@Nc, 1, MPI_INT, 0, MPI_COMM_WORLD);
 	MPI_BCAST(@Ns, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln('InitProcStateTrans after last bcast'); 
+//	writeln('InitProcStateTrans after last bcast'); 
 
 	// расчет кол-ва заявок для процесса
     if myid = 0 then begin
@@ -438,7 +438,7 @@ begin
 		setLength(procUpMArr, numprocs);
 
 		procM:= (M-1) div numprocs; //M-1 потому как для Mю заявку считаем отдельно
-		writeln(myid, format(' M=%d, procM=%d, numprocs=%d', [M, procM, numprocs]) );
+//		writeln(myid, format(' M=%d, procM=%d, numprocs=%d', [M, procM, numprocs]) );
 
 		procUpM:= M-1;
 		if ((M-1) mod numprocs) > 0 then begin // заявки нацело НЕ делятся по процессам
@@ -471,10 +471,10 @@ begin
 
 	// рассылка кол-ва заявок по процессам
 	if myid=0 then begin
-		writeln(myid, format(' send procM=%d ', [procMArr[0]]) );
+//		writeln(myid, format(' send procM=%d ', [procMArr[0]]) );
 	end;
 	MPI_SCATTER(@procMArr[0], 1, MPI_INT, @procM, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln(myid, format(' recv procM=%d ', [procM]) );
+//	writeln(myid, format(' recv procM=%d ', [procM]) );
 
 {	bufsize := SizeOf(longint) + MPI_BSEND_OVERHEAD;
 	getMem(buf, bufsize);
@@ -501,10 +501,10 @@ begin
 }
 	// рассылка начального номера заявки по процессам
 	if myid=0 then begin
-		writeln(myid, format(' send procUpM=%d ', [procUpMArr[0]]) );
+//		writeln(myid, format(' send procUpM=%d ', [procUpMArr[0]]) );
 	end;
 	MPI_SCATTER(@procUpMArr[0], 1, MPI_INT, @procUpM, 1, MPI_INT, 0, MPI_COMM_WORLD);
-	writeln(myid, format(' recv procUpM=%d ', [procUpM]) );
+//	writeln(myid, format(' recv procUpM=%d ', [procUpM]) );
 {
 	if myid = 0 then begin
 		tprocUpM:= M-1;
@@ -582,12 +582,12 @@ var
 	ai: longint;
 	acur_buf: PtStateTransRec;
 begin
-	writeln('in packProcStateTransArr');
+//	writeln('in packProcStateTransArr');
 	for ai:=1 to aarrlen - 1 do begin
 		acur_buf:=abuf+(sizeOfStateTransRec*(ai-1)); // смещение на всю запись
         acur_buf^:= (aarrptr + ai - 1)^;
 	end;
-	writeln('out packProcStateTransArr');
+//	writeln('out packProcStateTransArr');
 end;
 
 
@@ -705,7 +705,7 @@ begin
 	writeln(myid, format('| procStateTransCnt = %d', [ procStateTransCnt ] ));
    	MPI_GATHER(@procStateTransCnt, 1, MPI_INT, @procStateTransCntArr[myid], 1, MPI_INT, 0, MPI_COMM_WORLD);
 	if myid = 0 then begin
-		writeln(myid, format('| procStateTransCntArr[%d] = %d', [ myid, procStateTransCntArr[0] ] ));
+//		writeln(myid, format('| procStateTransCntArr[%d] = %d', [ myid, procStateTransCntArr[0] ] ));
 	end;
 
 {
@@ -732,15 +732,16 @@ begin
 //    	startTemp1:= endTemp1;
 
 //writeln(myid, '| before packProcStateTransArr');
-		writeln('before packProcStateTransArr ' +
-          'with cnt=' + IntToStr(procStateTransCnt) + ' and size = ' + IntToStr(procStateTransSendBufSize));
+//		writeln('before packProcStateTransArr ' +
+//          'with cnt=' + IntToStr(procStateTransCnt) + ' and size = ' + IntToStr(procStateTransSendBufSize));
 //v1		packProcStateTransArr(procStateTransArr, procStateTransSendBuf);
 //v2
+		writeln(myid, format('| procStateTransSendBufSize=%d Kbytes', [procStateTransSendBufSize div 1024] ) );
 		packProcStateTransArr(
           Addr(procStateTransArr[Low(procStateTransArr)]), 
           Length(procStateTransArr),
           procStateTransSendBuf);
-		writeln('after packProcStateTransArr');
+//		writeln('after packProcStateTransArr');
 
 //		endTemp1:= MPI_Wtime;
 //		writeln(myid, '| MPI_BSEND(procStateTrans: packProcStateTransArr ', endTemp1 - startTemp1: 9:6);
@@ -879,7 +880,7 @@ begin
 	if myid = 0 then begin
 	    endStateTransMPI:= MPI_Wtime;
 		totalStateTransMPI:=totalStateTransMPI + endStateTransMPI-startStateTransMPI;
-		writeln(myid, '| totalStateTransMPI ', totalStateTransMPI: 9:6);
+		writeln(myid, format('| TIME totalStateTransMPI=%.6f sec', [totalStateTransMPI]));
 
 		//Скопировать в ноды от номера перед главным циклом до текущего
 //		writeln('tempStateTransCnt+1 = ', tempStateTransCnt+1
@@ -903,7 +904,7 @@ begin
 				);
 			end;
 		end;
-
+		writeln(myid, format('| StateTransCnt=%d', [StateTransCnt] ) );
 		// Перенесен в Main
 //		setLength(StateTransArr, 0);
 //		writeln(' after AddAllStateTransForInitialState ');
