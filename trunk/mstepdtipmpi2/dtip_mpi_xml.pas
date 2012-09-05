@@ -60,7 +60,18 @@ begin
 		result:= StrToBool(astr);
 end;
 
+function getStrNodeValue(aDoc: TXMLDocument;aname: string; adef: string): string;
+var
+	astr: string;
+begin
+	astr:= aDoc.getElementsByTagName(aname)[0].TextContent;
+	if astr='' then
+		result:= adef
+	else
+		result:= astr;
+end;
 
+/////////////////////////////////
 function addIntNode(var aRootNode:TDOMNode; aNodeName:string; aNodeValue:Longint):boolean;
 begin	
 	parentNode:=aDoc.CreateElement(aNodeName);

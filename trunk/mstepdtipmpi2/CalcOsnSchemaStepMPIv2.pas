@@ -62,9 +62,11 @@ var
 	acur_buf_dbl: ^double;
 begin
 // Цикл по шагам
-//	writeln(myid, '|   BeforeStep ');
 	aibase:=1;
-    startTemp1:= MPI_Wtime; 
+	if messageMode = 'debug' then begin
+		writeln(myid, '|   BeforeStep ');
+	    startTemp1:= MPI_Wtime; 
+	end;
 
 //	procCopyArrCurrToPrev();
 	if myid = 0 then begin
@@ -79,9 +81,11 @@ begin
 		ag_n1:= get_qik(aibase, ak) + arrVprevStep[get_j(aibase, ak)];
 		arrG[currStep]:=ag_n1;
 	end;
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|   InitStep ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+	if messageMode = 'debug' then begin
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|   InitStep ', endTemp1 - startTemp1: 9:6);
+	    startTemp1:= endTemp1;
+	end;
 
 {	for ai:= aibase to Ns-1 do begin
 		writeln(format('ArrVcurrStep[%d] = %f', [ai, ArrVcurrStep[ai]]));
@@ -107,13 +111,15 @@ begin
 		CalcForState();
 	end;
 }
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|   SendStepData ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+	if messageMode = 'debug' then begin
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|   SendStepData ', endTemp1 - startTemp1: 9:6);
+	    startTemp1:= endTemp1;
 
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|   StartMainCycle ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|   StartMainCycle ', endTemp1 - startTemp1: 9:6);
+	    startTemp1:= endTemp1;
+	end;
 
 //	writeln(' procDownNc ', procDownNc, ' procUpNc ', procUpNc);
 	for am:= 1 to M do begin
@@ -129,9 +135,11 @@ begin
 			acur_buf_int:= sendSubArrDBuf + (an-procDownNc)*sizeOfLongint;
 			acur_buf_int^:= procArrDcurrStep[ai];
 		end;
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|       CalcData   ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+		if messageMode = 'debug' then begin
+			endTemp1:= MPI_Wtime;
+			writeln(myid, '|       CalcData   ', endTemp1 - startTemp1: 9:6);
+		    startTemp1:= endTemp1;
+		end;
 		// отправить обновленные данные массива procArrVcurrStep
 //		MPI_GATHERV(sendSubArrVBuf, procNc, MPI_Double, 
 //					recvSubArrVBuf, procNcArr[0], procSubArrVDispls[0], MPI_Double, 0, MPI_COMM_WORLD);
@@ -146,9 +154,11 @@ begin
 			procArrVcurrStep[ai]:=ArrVcurrStep[ai];
 		end;
 
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|       SendData   ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+		if messageMode = 'debug' then begin
+			endTemp1:= MPI_Wtime;
+			writeln(myid, '|       SendData   ', endTemp1 - startTemp1: 9:6);
+		    startTemp1:= endTemp1;
+		end;
 {		if myid = 0 then begin
 			// распковать
 			for an:= 1 to Nc+1 do begin
@@ -175,16 +185,19 @@ begin
 //		ai:= aibase + (am-1)*(Nc+1);
 //		MPI_BCAST(@procArrVcurrStep[ai], Nc+1, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|       resendData ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+		if messageMode = 'debug' then begin
+			endTemp1:= MPI_Wtime;
+			writeln(myid, '|       resendData ', endTemp1 - startTemp1: 9:6);
+		    startTemp1:= endTemp1;
+		end;
 
 	end;
 
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|   endMainCycle ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
-
+	if messageMode = 'debug' then begin
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|   endMainCycle ', endTemp1 - startTemp1: 9:6);
+	    startTemp1:= endTemp1;
+	end;
 {
 	for am:= 1 to M do begin
 		// перепаковать и сделать 1у передачу
@@ -246,9 +259,11 @@ begin
 		procNc:= procNcArr[0];
 		procUpNc:= procDownNc + procNc - 1;
 	end;
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|       sendD ', endTemp1 - startTemp1: 9:6);
-    startTemp1:= endTemp1;
+	if messageMode = 'debug' then begin
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|       sendD ', endTemp1 - startTemp1: 9:6);
+	    startTemp1:= endTemp1;
+	end;
 
 	// отправить обновленные данные массива procArrDcurrStep
 
@@ -258,9 +273,11 @@ begin
 
 		Result := IsSolved();
 	end;
-	endTemp1:= MPI_Wtime;
-	writeln(myid, '|   endStep ', endTemp1 - startTemp1: 9:6,#13#10);
-    startTemp1:= endTemp1;
+	if messageMode = 'debug' then begin
+		endTemp1:= MPI_Wtime;
+		writeln(myid, '|   endStep ', endTemp1 - startTemp1: 9:6,#13#10);
+	    startTemp1:= endTemp1;
+	end;
 {	if myid = 0 then
 		readln();
 	MPI_Barrier(MPI_COMM_WORLD);
