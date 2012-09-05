@@ -38,6 +38,8 @@
 	<cW>0,8</cW>
 	<addStateTrans>false</addStateTrans>
 	<addOsnSteps>false</addOsnSteps>
+	<!-- режим логирования действий. Значения: debug, none -->
+	<messageMode>none</messageMode>
 
 
 </dtip>

@@ -108,6 +108,7 @@ begin
 
 		addStateTrans:= getBoolNodeValue(inDoc, 'addStateTrans', true);
 		addOsnSteps:= getBoolNodeValue(inDoc, 'addOsnSteps', true);
+		messageMode:= getStrNodeValue(inDoc, 'messageMode', 'debug');
 {	
 	for ai:=1 to M do begin
 		rlmni[ai]:=0; //мин
