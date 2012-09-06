@@ -117,11 +117,64 @@ begin
    	osnStepRootNode:=aDoc.CreateElement('osnStepRoot');
 end;
 
+// вывод данных наилучшего распределения в XML
+// вариант 2.
+// скопировать данные из входного файла 
+// изменить значения на нижнем уровне
+// обновить значения узлов
+// проверить значение для верхнего узла
+function ordersXMLOut(): boolean;
+var
+	inOrdersNode, inNodeorderNode, NextNode: TDOMNode;
+	ai, axsum, axtotal: longint;
+	aqsum, aqtotal:double;
+	nodeList: TDOMNodeList;
+begin
+	commentNode:=aDoc.CreateComment('best distribution');
+	RootNode.AppendChild(commentNode);
+	// скопировать данные из входного файла 
+	ReadXMLFile(inDoc, inFileName);
+	tempRootNode:= aDoc.importNode(inDoc.getElementsByTagName('orders')[0],true);
+	inDoc.Free;
+   	RootNode.AppendChild(tempRootNode);
+	// изменить значения на нижнем уровне
+	nodeList:= aDoc.getElementsByTagName('order');
+	axtotal:= 0;
+	aqtotal:= 0;
+	for ai:=1 to nodeList.length do begin
+	    tempNode:= nodeList[ai-1];
+		TDOMElement(tempNode).SetAttribute('q', Format('%1.5f',[rxi[ai]*getDblAttrValue(tempNode, 'p', 0)]));
+		TDOMElement(tempNode).SetAttribute('x', Format('%d',[rxi[ai]]));
+		axtotal:= axtotal + rxi[ai];
+		aqtotal:= aqtotal + rudi[ai]*rxi[ai];
+	end;
+	// обновить значения узлов. Предполагаем что 1 уровень
+	nodeList:= aDoc.getElementsByTagName('nodeorder');
+	for ai:=1 to nodeList.length do begin
+	    tempNode:= nodeList[ai-1];
+		// перебор по надам нижнего уровня
+		nextNode:= tempNode.firstChild;
+		axsum:=0;
+		aqsum:=0;
+		repeat
+			axsum:=axsum + getIntAttrValue(nextNode, 'x', 0);
+			aqsum:=aqsum + getDblAttrValue(nextNode, 'q', 0);
+			nextNode:= nextNode.nextSibling;
+		until not(Assigned(nextNode));
+		TDOMElement(tempNode).SetAttribute('x', Format('%d',[axsum]));
+		TDOMElement(tempNode).SetAttribute('q', Format('%1.5f',[aqsum]));
+	end;
+	// обновить верхний узел
+	TDOMElement(tempRootNode).SetAttribute('x', Format('%d',[axtotal]));
+	TDOMElement(tempRootNode).SetAttribute('q', Format('%1.5f',[aqtotal]));
+
+end;
+
 function FinalizeXML():boolean;
 var
 	ai: longint;
 begin
-	// �᭮��� ��ࠬ����
+	// основные параметры
 	commentNode:=aDoc.CreateComment('main data');
    	tempRootNode:=aDoc.CreateElement('mainDataRoot');
 	addIntNode(tempRootNode, 'numprocs', numprocs);
@@ -132,10 +185,15 @@ begin
 	RootNode.AppendChild(commentNode);
    	RootNode.AppendChild(tempRootNode);
 
-	// ��।������
+	// вывод распределения
+// вариант 2. с учетом 1го уровня иерархии	
+	ordersXMLOut();
+{
+вариант 1. без иерархии
 	commentNode:=aDoc.CreateComment('best distribution');
 	RootNode.AppendChild(commentNode);
    	tempRootNode:=aDoc.CreateElement('orders');
+
 	for ai:= 1 to M do begin
 		tempNode:=aDoc.CreateElement('order');
 		TDOMElement(tempNode).SetAttribute('q', Format('%1.5f',[rudi[ai]*rxi[ai]]));
@@ -147,33 +205,34 @@ begin
 		tempRootNode.AppendChild(tempNode);
 	end;
    	RootNode.AppendChild(tempRootNode);
+}
 
-	// �᭮��� १�����
+	// основные результаты
 	commentNode:=aDoc.CreateComment('results');
 	RootNode.AppendChild(commentNode);
    	tempRootNode:=aDoc.CreateElement('resultsRoot');
 //	tempRootNode.AppendChild(commentNode);
 	addDblNode(tempRootNode, 'bestValue', rQSumMax);
 
-	// �६� �믮������
+	// время выполнения
 	addDblNode(tempRootNode, 'totaltime', totaltime);
 	addDblNode(tempRootNode, 'totalStateTrans', totalStateTrans);
-	addDblNode(tempRootNode, 'totalStateTransMPI', totalStateTransMPI);// �� 0�� ������
+	addDblNode(tempRootNode, 'totalStateTransMPI', totalStateTransMPI);// по 0му процессу
 	addDblNode(tempRootNode, 'totalOsn', totalOsn);
 	addDblNode(tempRootNode, 'totalOsnMPI', totalOsnMPI);
 
-	// ����஢�� ��� �᭮���� �奬�. ����� ���� ��᫥ �⫠���
+	// трассировка для основной схемы. можно убрать после отладки
 	commentNode:=aDoc.CreateComment(rTrace);
 	tempRootNode.AppendChild(commentNode);
 
    	RootNode.AppendChild(tempRootNode);
 
-	// ����� � 䠧���� ���室��. ����� ���� ��᫥ �⫠���
+	// данные о фазовых переходах. можно убрать после отладки
 	commentNode:=aDoc.CreateComment('state trans data');
 	RootNode.AppendChild(commentNode);
    	RootNode.AppendChild(stateTransRootNode);
 
-	// ����� � 蠣�� �᭮���� �奬� ��⨬���樨. ����� ���� ��᫥ �⫠���
+	// данные о шагах основной схемы оптимизации. можно убрать после отладки
 	commentNode:=aDoc.CreateComment('osn schema steps data');
 	RootNode.AppendChild(commentNode);
    	RootNode.AppendChild(osnStepRootNode);
