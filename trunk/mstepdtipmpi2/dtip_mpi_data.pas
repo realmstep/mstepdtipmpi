@@ -39,25 +39,49 @@ end;
 function InitOrders(): boolean;
 var
 	astr: string;
-	ordersNode, NextNode: TDOMNode;
+	ordersNode, nodeorderNode, NextNode: TDOMNode;
 	ai: longint;
+	nodeorderP: double;
 begin
 	ordersNode:= inDoc.getElementsByTagName('orders')[0];
 	ai:=0;
 	NextNode:= ordersNode.firstChild;
-	repeat
-		inc(ai);
-		if ai>M then break;
+	nodeorderNode:=nil;
+	nodeorderP:= 1;
+		repeat
+			if NextNode.NodeName = 'nodeorder' then begin
+				writeln('NextNode.NodeName ', NextNode.NodeName);
+				nodeorderNode:= NextNode;
+				//readNodeorder(nodeorderNode);
+				nodeorderP:=getDblAttrValue(nodeorderNode, 'p', 0.0);
+				NextNode:= nodeorderNode.firstChild;
+			end;
+			if NextNode.NodeName = 'order' then begin
+				writeln('NextNode.NodeName ', NextNode.NodeName);
+				//readOrder()
+				inc(ai);
+				if ai>M then break;
+			
+				rudi[ai]:=nodeorderP*getDblAttrValue(NextNode, 'p', 0.0);
+				writeln( format('ai=%d, nodeorderP=%.4f, p=%.4f ', [ai, nodeorderP, rudi[ai]]));
+				rlmni[ai]:=getIntAttrValue(NextNode, 'mn', minAmountPerOrder);
+				rlmxi[ai]:=getIntAttrValue(NextNode, 'mx', maxAmountPerOrder);
+				rsti[ai] :=1; //цена ед пока не из файла
+				rxi[ai]  :=0; //x выд рес - начальная инициализация
+				rqi[ai]  :=0; //q пок - начальная инициализация
+			end;
 
-		rudi[ai]:=getDblAttrValue(NextNode, 'p', 0.0);
-		rlmni[ai]:=getIntAttrValue(NextNode, 'mn', minAmountPerOrder);
-		rlmxi[ai]:=getIntAttrValue(NextNode, 'mx', maxAmountPerOrder);
-		rsti[ai] :=1; //цена ед пока не из файла
-		rxi[ai]  :=0; //x выд рес - начальная инициализация
-		rqi[ai]  :=0; //q пок - начальная инициализация
+		    NextNode := NextNode.NextSibling;
+//			writeln('not Assigned(NextNode)', not Assigned(NextNode));
+			if not Assigned(NextNode) then begin
+//				writeln('Assigned(nodeorderNode)', Assigned(nodeorderNode));
+				if Assigned(nodeorderNode) then begin
+					NextNode := nodeorderNode.NextSibling;
+					nodeorderP:= 1;
+				end;
+			end;
+		until not Assigned(NextNode);
 
-	    NextNode := NextNode.NextSibling;
-	until not Assigned(NextNode);
 	Result:= (ai=M);
 end;
 
